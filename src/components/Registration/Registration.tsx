@@ -42,19 +42,33 @@ export function Reg()
         }
     }
 
-    //firstName
-    const logiwnHander = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setLogin(e.target.value)
+    //функция проверки имени
+    const firstNameHander = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFirstName(e.target.value)
         if(e.target.value.length < 3){
-            setLoginError('Логин меньше 3 символов')
+            setFirstNameError('Имя меньше 3 символов')
         }else if(!e.target.value){
-            setLoginError('Логин не может быть пустым')
+            setFirstNameError('Имя не может быть пустым')
         }
         else{
-            setLoginError('')
+            setFirstNameError('')
         }
     }
 
+    //функция проверки имени
+    const lastNameHander = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setLastName(e.target.value)
+        if(e.target.value.length < 5){
+            setLastNameError('Фамилия меньше 5 символов')
+        }else if(!e.target.value){
+            setLastNameError('Фамилия не может быть пустым')
+        }
+        else{
+            setLastNameError('')
+        }
+    }
+
+    //функция проверки email
     const emailHander = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value)
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -65,6 +79,7 @@ export function Reg()
         }
     }
 
+    //функция проверки пароля
     const passwordHander = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(e.target.value)
         if(e.target.value.length < 5){
@@ -78,6 +93,7 @@ export function Reg()
         }
     }
 
+    //фукнция состояния (пользователь находится вы поле или нет)
     const  blurHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         switch(e.target.name){
             case 'login':
@@ -111,11 +127,11 @@ export function Reg()
             {/* Поле имени */}
             <p></p>
             {(firstNameDirty && firstNameError) && <div style={{color:'red'}}>{firstNameError}</div>}
-            <input onBlur={e => blurHandler(e)} name = "firstName" type="text" placeholder="Введите имя" />
+            <input onChange={e => firstNameHander(e)} value={firstName} onBlur={e => blurHandler(e)} name = "firstName" type="text" placeholder="Введите имя" />
             {/* Поле Фамилии */}
             <p></p>
             {(lastNameDirty && lastNameError) && <div style={{color:'red'}}>{lastNameError}</div>}
-            <input onBlur={e => blurHandler(e)} name = "lastName" type="text" placeholder="Введите фамилию" />
+            <input onChange={e => lastNameHander(e)} value={lastName} onBlur={e => blurHandler(e)} name = "lastName" type="text" placeholder="Введите фамилию" />
             {/* Поле отчество */}
             <p></p>
             {(PatronymicDirty && PatronymicError) && <div style={{color:'red'}}>{PatronymicError}</div>}
