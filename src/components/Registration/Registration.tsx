@@ -55,7 +55,7 @@ export function Reg()
         }
     }
 
-    //функция проверки имени
+    //функция проверки Фамилии
     const lastNameHander = (e: React.ChangeEvent<HTMLInputElement>) => {
         setLastName(e.target.value)
         if(e.target.value.length < 5){
@@ -65,6 +65,19 @@ export function Reg()
         }
         else{
             setLastNameError('')
+        }
+    }
+
+    //функция проверки Отчества
+    const patronymicHander = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setPatronymic(e.target.value)
+        if(e.target.value.length < 5){
+            setPatronymicError('Отчество меньше 5 символов')
+        }else if(!e.target.value){
+            setPatronymicError('Отчество не может быть пустым')
+        }
+        else{
+            setPatronymicError('')
         }
     }
 
@@ -135,7 +148,7 @@ export function Reg()
             {/* Поле отчество */}
             <p></p>
             {(PatronymicDirty && PatronymicError) && <div style={{color:'red'}}>{PatronymicError}</div>}
-            <input onBlur={e => blurHandler(e)} name = "patronymic" type="text" placeholder="Введите отчество" />
+            <input onChange={e => patronymicHander(e)} value={Patronymic} onBlur={e => blurHandler(e)} name = "patronymic" type="text" placeholder="Введите отчество" />
             {/* Поле почты */}
             <p></p>
             {(emailDirty && emailError) && <div style={{color:'red'}}>{emailError}</div>}
