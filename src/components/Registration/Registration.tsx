@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Registration } from "../../data/Registration"
 
 interface ProductProps{
@@ -21,6 +21,7 @@ export function Reg()
     const [PatronymicDirty, SetPatronymicDirty] = useState(false)
     const [emailDirty, SetEmailDirty] = useState(false)
     const [passwordDirty, SetPasswordDirty] = useState(false)
+    const[formValid, setFormValid] = useState(false)
 
     const [loginError, setLoginError] = useState('Логин не может быть пустым')
     const [firstNameError, setFirstNameError] = useState('Имя не может быть пустым')
@@ -130,6 +131,18 @@ export function Reg()
         }
     }
 
+    //функция отвечающая за вижимость кнопки по состоянию веденных полей 
+    useEffect( () =>{
+        if(loginError || firstNameError || lastNameError || PatronymicError || emailError || passwordError)
+        {
+            setFormValid(false)
+        }
+        else{
+            setFormValid(true)
+        }
+    }
+    )    
+
     return (
         <div className="reg">
             <h1>Регистрация пользователя</h1>
@@ -157,7 +170,7 @@ export function Reg()
             <p></p>
             {(passwordDirty && passwordError) && <div style={{color:'red'}}>{passwordError}</div>}
             <input onChange={e => passwordHander(e)} value={password} onBlur={e => blurHandler(e)} name = "password" type="text" placeholder="Введите пароль" />
-            <button type="submit">Зарегистрироваться</button>
+            <button disabled={!formValid} type="submit">Зарегистрироваться</button>
         </div>
     );
 
