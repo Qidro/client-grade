@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react"
 import { Registration } from "../../data/Registration"
+import {User} from "../../types/user";
+import { CreateUser } from "../../services/nodes";
+import { title } from "process";
 
 interface ProductProps{
     product: Registration
@@ -8,6 +11,8 @@ interface ProductProps{
 
 export function Reg()
 {
+    
+
     const [login, setLogin] = useState('')
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
@@ -131,7 +136,7 @@ export function Reg()
         }
     }
 
-    //функция отвечающая за вижимость кнопки по состоянию веденных полей 
+    //функция отвечающая за видимость кнопки по состоянию веденных полей 
     useEffect( () =>{
         if(loginError || firstNameError || lastNameError || PatronymicError || emailError || passwordError)
         {
@@ -143,8 +148,27 @@ export function Reg()
     }
     )    
 
+    const CreateUsers = async() =>
+    {   
+        // const posts = [
+        //     {login: login, firstName: firstName, lastName: lastName, patronymic:Patronymic, email: email, password:password  }
+        //   ];
+        let posts = 
+            {
+              login: login,
+              firstName: firstName,
+              lastName: lastName,
+              patronymic: Patronymic,
+              email: email,
+              password: password
+            }
+          
+        await CreateUser(posts);
+    };
+
     return (
-        <div className="reg">
+        <form>
+            <div className="reg">
             <h1>Регистрация пользователя</h1>
             <p></p>
             {/* Поле логина */}
@@ -170,8 +194,10 @@ export function Reg()
             <p></p>
             {(passwordDirty && passwordError) && <div style={{color:'red'}}>{passwordError}</div>}
             <input onChange={e => passwordHander(e)} value={password} onBlur={e => blurHandler(e)} name = "password" type="text" placeholder="Введите пароль" />
-            <button disabled={!formValid} type="submit">Зарегистрироваться</button>
+            <button onClick={CreateUsers} disabled={!formValid} type="button">Зарегистрироваться</button>
         </div>
+        </form>
+        
     );
 
 }
