@@ -37,6 +37,7 @@ export function Reg()
 
     // функция проверки логина
     const loginHander = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setMessage("");
         setLogin(e.target.value)
         if(e.target.value.length < 3){
             setLoginError('Логин меньше 3 символов')
@@ -147,7 +148,7 @@ export function Reg()
         }
     }
     )    
-
+    const [message, setMessage] = useState('');
     const CreateUsers = async() =>
     {   
         // const posts = [
@@ -163,7 +164,24 @@ export function Reg()
               password: password
             }
           
-        await CreateUser(posts);
+            try{
+                console.log("Массив: ", posts);
+                const respone = await fetch("http://localhost:5281/Registration", {
+                method: "POST",
+                headers:{
+                   "content-type": "application/json",
+                },
+                body: JSON.stringify(posts),
+             })
+             const data = await respone.text();
+             setMessage(data);
+             console.log(message);
+             console.log("Держи ",message);
+              }
+             catch(e)
+             {
+              console.error("Бывает:", e);
+             }
     };
 
     return (
@@ -195,6 +213,7 @@ export function Reg()
             {(passwordDirty && passwordError) && <div style={{color:'red'}}>{passwordError}</div>}
             <input onChange={e => passwordHander(e)} value={password} onBlur={e => blurHandler(e)} name = "password" type="text" placeholder="Введите пароль" />
             <button onClick={CreateUsers} disabled={!formValid} type="button">Зарегистрироваться</button>
+            <p>{message}</p>
         </div>
         </form>
         

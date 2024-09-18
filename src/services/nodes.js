@@ -23,6 +23,7 @@ export const feact = async () => {
 //    }
 // }
 //функция по создани юзера
+
 export const CreateUser = async (posts) => {
    try{
       console.log("Массив: ", posts);
@@ -33,7 +34,6 @@ export const CreateUser = async (posts) => {
       },
       body: JSON.stringify(posts),
    });
-    console.log(respone);
     }
    catch(e)
    {
