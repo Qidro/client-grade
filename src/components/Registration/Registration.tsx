@@ -147,7 +147,8 @@ export function Reg()
             setFormValid(true)
         }
     }
-    )    
+    )
+    //функция и состояние отправки post запроса на создание пользователя    
     const [message, setMessage] = useState('');
     const CreateUsers = async() =>
     {   
@@ -163,25 +164,7 @@ export function Reg()
               email: email,
               password: password
             }
-          
-            try{
-                console.log("Массив: ", posts);
-                const respone = await fetch("http://localhost:5281/Registration", {
-                method: "POST",
-                headers:{
-                   "content-type": "application/json",
-                },
-                body: JSON.stringify(posts),
-             })
-             const data = await respone.text();
-             setMessage(data);
-             console.log(message);
-             console.log("Держи ",message);
-              }
-             catch(e)
-             {
-              console.error("Бывает:", e);
-             }
+            setMessage(await CreateUser(posts));
     };
 
     return (
@@ -213,6 +196,7 @@ export function Reg()
             {(passwordDirty && passwordError) && <div style={{color:'red'}}>{passwordError}</div>}
             <input onChange={e => passwordHander(e)} value={password} onBlur={e => blurHandler(e)} name = "password" type="text" placeholder="Введите пароль" />
             <button onClick={CreateUsers} disabled={!formValid} type="button">Зарегистрироваться</button>
+            {/* поле ошибки регистрации */}
             <p>{message}</p>
         </div>
         </form>

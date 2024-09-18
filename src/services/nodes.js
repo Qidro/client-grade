@@ -22,21 +22,24 @@ export const feact = async () => {
 //     console.error("Бывает:", e);
 //    }
 // }
-//функция по создани юзера
 
+//функция по создани юзера
 export const CreateUser = async (posts) => {
    try{
       console.log("Массив: ", posts);
-    var respone = await fetch("http://localhost:5281/Registration", {
+      const respone = await fetch("http://localhost:5281/Registration", {
       method: "POST",
       headers:{
          "content-type": "application/json",
       },
       body: JSON.stringify(posts),
-   });
+   })
+   const data = await respone.text();
+   return(data);
     }
    catch(e)
    {
     console.error("Бывает:", e);
+    return("Ошибка регисрации");
    }
 }
