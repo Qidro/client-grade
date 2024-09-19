@@ -3,7 +3,6 @@ import { Registration } from "../../data/Registration"
 import {User} from "../../types/user";
 import { CreateUser } from "../../services/nodes";
 import { title } from "process";
-
 interface ProductProps{
     product: Registration
 
@@ -12,6 +11,7 @@ interface ProductProps{
 export function Reg()
 {
     
+    const [styleButton, setStyleButton] = useState('bg-blue-500')
 
     const [login, setLogin] = useState('')
     const [firstName, setFirstName] = useState('')
@@ -41,6 +41,8 @@ export function Reg()
         setLogin(e.target.value)
         if(e.target.value.length < 3){
             setLoginError('Логин меньше 3 символов')
+        }else if(e.target.value.length > 15){
+            setLoginError('Логин больше 15 символов')
         }else if(!e.target.value){
             setLoginError('Логин не может быть пустым')
         }
@@ -51,6 +53,7 @@ export function Reg()
 
     //функция проверки имени
     const firstNameHander = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setMessage("");
         setFirstName(e.target.value)
         if(e.target.value.length < 3){
             setFirstNameError('Имя меньше 3 символов')
@@ -64,6 +67,7 @@ export function Reg()
 
     //функция проверки Фамилии
     const lastNameHander = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setMessage("");
         setLastName(e.target.value)
         if(e.target.value.length < 5){
             setLastNameError('Фамилия меньше 5 символов')
@@ -77,6 +81,7 @@ export function Reg()
 
     //функция проверки Отчества
     const patronymicHander = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setMessage("");
         setPatronymic(e.target.value)
         if(e.target.value.length < 5){
             setPatronymicError('Отчество меньше 5 символов')
@@ -90,6 +95,7 @@ export function Reg()
 
     //функция проверки email
     const emailHander = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setMessage("");
         setEmail(e.target.value)
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if(!re.test(String(e.target.value).toLocaleLowerCase())){
@@ -101,6 +107,7 @@ export function Reg()
 
     //функция проверки пароля
     const passwordHander = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setMessage("");
         setPassword(e.target.value)
         if(e.target.value.length < 5){
             setPasswordError('Некорректный пароль. Пароль должен иметь более 5 символов')
@@ -142,9 +149,11 @@ export function Reg()
         if(loginError || firstNameError || lastNameError || PatronymicError || emailError || passwordError)
         {
             setFormValid(false)
+            setStyleButton('mt-1 bg-blue-300 px-20 py-2 text-white rounded-lg')
         }
         else{
             setFormValid(true)
+            setStyleButton('mt-1 bg-blue-500 px-20 py-2 text-white rounded-lg')
         }
     }
     )
@@ -168,37 +177,38 @@ export function Reg()
     };
 
     return (
-        <form>
-            <div className="reg">
-            <h1>Регистрация пользователя</h1>
-            <p></p>
-            {/* Поле логина */}
-            {(loginDirty && loginError) && <div style={{color:'red'}}>{loginError}</div>}
-            <input onChange={e => loginHander(e)} value={login} onBlur={e => blurHandler(e)} name = "login" type="text" placeholder="Введите ваш логин" />
-            {/* Поле имени */}
-            <p></p>
-            {(firstNameDirty && firstNameError) && <div style={{color:'red'}}>{firstNameError}</div>}
-            <input onChange={e => firstNameHander(e)} value={firstName} onBlur={e => blurHandler(e)} name = "firstName" type="text" placeholder="Введите имя" />
-            {/* Поле Фамилии */}
-            <p></p>
-            {(lastNameDirty && lastNameError) && <div style={{color:'red'}}>{lastNameError}</div>}
-            <input onChange={e => lastNameHander(e)} value={lastName} onBlur={e => blurHandler(e)} name = "lastName" type="text" placeholder="Введите фамилию" />
-            {/* Поле отчество */}
-            <p></p>
-            {(PatronymicDirty && PatronymicError) && <div style={{color:'red'}}>{PatronymicError}</div>}
-            <input onChange={e => patronymicHander(e)} value={Patronymic} onBlur={e => blurHandler(e)} name = "patronymic" type="text" placeholder="Введите отчество" />
-            {/* Поле почты */}
-            <p></p>
-            {(emailDirty && emailError) && <div style={{color:'red'}}>{emailError}</div>}
-            <input onChange={e => emailHander(e)} value={email} onBlur={e => blurHandler(e)} name = "email" type="text" placeholder="Введите почту" />
-            {/* Поле пароля */}
-            <p></p>
-            {(passwordDirty && passwordError) && <div style={{color:'red'}}>{passwordError}</div>}
-            <input onChange={e => passwordHander(e)} value={password} onBlur={e => blurHandler(e)} name = "password" type="text" placeholder="Введите пароль" />
-            <button onClick={CreateUsers} disabled={!formValid} type="button">Зарегистрироваться</button>
-            {/* поле ошибки регистрации */}
-            <p>{message}</p>
-        </div>
+        <form className='bg-gray-200'>
+            <div className="h-screen flex justify-center items-center">
+                <div className='w-1/4 p-16 border-solid border-0
+            border-white-100 rounded-lg bg-white'>
+                    <div className = "pb-4 flex justify-center items-center"><img  src="logo.png" alt="неее" width={180} height={180}/></div>
+                    <div className="text-center">
+                        <h1 className="text-xl">Регистрация пользователя</h1>
+                        {/* Поле логина */}
+                        {(loginDirty && loginError) && <div style={{color:'red'}}>{loginError}</div>}
+                        <input className="shadow appearance-none border rounded w-full mt-4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onChange={e => loginHander(e)} value={login} onBlur={e => blurHandler(e)} name = "login" type="text" placeholder="Введите ваш логин" />
+                        {/*                         <input className="mt-4 pl-40 pr-4 py-1 border rounded-lg" onChange={e => loginHander(e)} value={login} onBlur={e => blurHandler(e)} name = "login" type="text" placeholder="Введите ваш логин" /> */}
+                        {/* Поле имени */}
+                        {(firstNameDirty && firstNameError) && <div style={{color:'red'}}>{firstNameError}</div>}
+                        <input className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onChange={e => firstNameHander(e)} value={firstName} onBlur={e => blurHandler(e)} name = "firstName" type="text" placeholder="Введите имя" />
+                        {/* Поле Фамилии */}
+                        {(lastNameDirty && lastNameError) && <div style={{color:'red'}}>{lastNameError}</div>}
+                        <input className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onChange={e => lastNameHander(e)} value={lastName} onBlur={e => blurHandler(e)} name = "lastName" type="text" placeholder="Введите фамилию" />
+                        {/* Поле отчество */}
+                        {(PatronymicDirty && PatronymicError) && <div style={{color:'red'}}>{PatronymicError}</div>}
+                        <input className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onChange={e => patronymicHander(e)} value={Patronymic} onBlur={e => blurHandler(e)} name = "patronymic" type="text" placeholder="Введите отчество" />
+                        {/* Поле почты */}
+                        {(emailDirty && emailError) && <div style={{color:'red'}}>{emailError}</div>}
+                        <input className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onChange={e => emailHander(e)} value={email} onBlur={e => blurHandler(e)} name = "email" type="text" placeholder="Введите почту" />
+                        {/* Поле пароля */}
+                        {(passwordDirty && passwordError) && <div style={{color:'red'}}>{passwordError}</div>}
+                        <input className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onChange={e => passwordHander(e)} value={password} onBlur={e => blurHandler(e)} name = "password" type="text" placeholder="Введите пароль" />
+                        <button className={styleButton} onClick={CreateUsers} disabled={!formValid} type="button">Зарегистрироваться</button>
+                        {/* поле ошибки регистрации */}
+                        <p className="text-red-600">{message}</p>
+                    </div>
+                </div>
+            </div>
         </form>
         
     );
