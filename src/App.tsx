@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import './App.css';
 import { Reg } from'./components/Registration/Registration';
 import { feact } from './services/nodes';
+import { Aut } from './components/Authorization/Authorization';
 
 function App() {
   useEffect(() => {
@@ -13,7 +14,7 @@ function App() {
   },[])
 
   return (
-    <Reg/>
+    <Aut/>
   );
 }
 

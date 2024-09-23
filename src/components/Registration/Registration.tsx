@@ -109,8 +109,8 @@ export function Reg()
     const passwordHander = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMessage("");
         setPassword(e.target.value)
-        if(e.target.value.length < 5){
-            setPasswordError('Некорректный пароль. Пароль должен иметь более 5 символов')
+        if(e.target.value.length < 8){
+            setPasswordError('Некорректный пароль. Пароль должен иметь более 7 символов')
         }else if(!e.target.value)
         {
             setPasswordError('Пароль не должен быть пустым')
@@ -181,7 +181,7 @@ export function Reg()
             <div className="h-screen flex justify-center items-center">
                 <div className='w-1/4 p-16 border-solid border-0
             border-white-100 rounded-lg bg-white'>
-                    <div className = "pb-4 flex justify-center items-center"><img  src="logo.png" alt="неее" width={180} height={180}/></div>
+                    <div className = "pb-4 flex justify-center items-center"><img  src="ugmu-logo.png" alt="неее" width={180} height={180}/></div>
                     <div className="text-center">
                         <h1 className="text-xl">Регистрация пользователя</h1>
                         {/* Поле логина */}
@@ -205,7 +205,7 @@ export function Reg()
                         <input className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onChange={e => passwordHander(e)} value={password} onBlur={e => blurHandler(e)} name = "password" type="text" placeholder="Введите пароль" />
                         <button className={styleButton} onClick={CreateUsers} disabled={!formValid} type="button">Зарегистрироваться</button>
                         {/* поле ошибки регистрации */}
-                        <p className="text-red-600">{message}</p>
+                        <p className="text-xl text-red-600">{message}</p>
                     </div>
                 </div>
             </div>
