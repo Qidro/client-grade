@@ -1,3 +1,6 @@
+//тесовый файл TS
+
+
 import axios from "axios"
 
 export const feact = async () => {
@@ -24,7 +27,7 @@ export const feact = async () => {
 // }
 
 //функция по создани юзера
-export const CreateUser = async (posts) => {
+export const CreateUser = async (posts: any) => {
    try{
       console.log("Массив: ", posts);
       const respone = await fetch("http://localhost:5281/Registration", {
