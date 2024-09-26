@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import { CreateUser } from "../../services/nodes";
-import { BrowserRouter, Route, Link  } from 'react-router-dom';
+import { BrowserRouter, Route, Link, useNavigate  } from 'react-router-dom';
 import { Reg } from "../Registration/Registration";
+import { CheckUser } from "../../services/node";
 
 export function Aut()
 {
@@ -77,6 +77,7 @@ export function Aut()
     )
     //функция и состояние отправки post запроса на создание пользователя    
     const [message, setMessage] = useState('');
+    const navigate = useNavigate();
     const CheckUsers = async() =>
     {   
         // const posts = [
@@ -88,7 +89,12 @@ export function Aut()
               password: password
             }
         console.log("Все прошло успешно");
-          setMessage(await CreateUser(posts));
+          setMessage(await CheckUser(posts));
+          if (message == "")
+          {
+           
+            navigate('/Test');
+          }
     };
 
     return (

@@ -5,6 +5,7 @@ import { feact } from './services/nodes';
 import { Route, Router, Routes } from 'react-router-dom';
 import { Aut } from './components/Authorization/Authorization';
 import { Rec } from './components/RecoveryPassword/Recovery';
+import { Tests } from './components/Tests/Tests';
 
 function App() {
   useEffect(() => {
@@ -21,6 +22,8 @@ function App() {
       <Route path='/reg' element={<Reg />}>
       </Route>
       <Route path='/' element={<Aut />}>
+      </Route>
+      <Route path='/test' element={<Tests />}>
       </Route>
   </Routes>
   );
