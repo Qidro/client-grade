@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { CreateUser } from "../../services/nodes";
+import { RecoveryPassword } from "../../services/node";
 
 
 export function Rec()
@@ -66,7 +66,7 @@ export function Rec()
     //функция отвечающая за видимость кнопки по состоянию веденных полей 
     useEffect( () =>{
         // if(loginError ||  emailError )
-        if(emailError )
+        if(loginError )
         {
             setFormValid(false)
             setStyleButton('mt-1 bg-blue-300 px-20 py-2 text-white rounded-lg')
@@ -86,10 +86,10 @@ export function Rec()
         //   ];
         let posts = 
             {
-              //login: login,
-              email: email,
+              login: login,
+              //email: email,
             }
-            setMessage(await CreateUser(posts));
+            setMessage(await RecoveryPassword(posts));
     };
 
     return (
@@ -101,12 +101,12 @@ export function Rec()
                     <div className="text-center">
                         <h1 className="text-xl">Восстановление пароля</h1>
                         {/* Поле логина */}
-                        {/* {(loginDirty && loginError) && <div style={{color:'red'}}>{loginError}</div>}
+                        {(loginDirty && loginError) && <div style={{color:'red'}}>{loginError}</div>}
                         <input className="shadow appearance-none border rounded w-full mt-4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onChange={e => loginHander(e)} value={login} onBlur={e => blurHandler(e)} name = "login" type="text" placeholder="Введите ваш логин" />
-                         */}
+                        
                         {/* Поле почты */}
-                        {(emailDirty && emailError) && <div style={{color:'red'}}>{emailError}</div>}
-                        <input className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onChange={e => emailHander(e)} value={email} onBlur={e => blurHandler(e)} name = "email" type="text" placeholder="Введите почту" />
+                        {/* {(emailDirty && emailError) && <div style={{color:'red'}}>{emailError}</div>}
+                        <input className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onChange={e => emailHander(e)} value={email} onBlur={e => blurHandler(e)} name = "email" type="text" placeholder="Введите почту" /> */}
                         <button className={styleButton} onClick={CreateUsers} disabled={!formValid} type="button">Восстановить пароль</button>
                         {/* поле ошибки регистрации */}
                         <p className="text-xl text-red-600">{message}</p>

@@ -67,3 +67,24 @@ export const CheckUser = async (posts: any) => {
     return("Ошибка");
    }
 }
+
+//функция по Восстановление пароля
+export const RecoveryPassword = async (posts: any) => {
+   try{
+      console.log("Массив: ", posts);
+      const respone = await fetch("http://localhost:5281/RecoveryPassword", {
+      method: "POST",
+      headers:{
+         "content-type": "application/json",
+      },
+      body: JSON.stringify(posts),
+   })
+   const data = await respone.text();
+   return(data);
+    }
+   catch(e)
+   {
+    console.error("Бывает:", e);
+    return("Ошибка");
+   }
+}
