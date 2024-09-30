@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-import { Reg } from'./components/Registration/Registration';
 import { feact } from './services/nodes';
 import { Route, Router, RouterProvider, Routes } from 'react-router-dom';
-import { Aut } from './components/Authorization/Authorization';
-import { Rec } from './components/RecoveryPassword/Recovery';
-import { Tests } from './components/Tests/Tests';
 import { router } from './routes/router';
+import Navbars from './components/NavigationPanel/Navbar';
 
 function App() {
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const feactData = async() =>
     {
@@ -27,7 +25,14 @@ function App() {
   //     <Route path='/test' element={<Tests />}>
   //     </Route>
   // </Routes>
-  <RouterProvider router={router}/>
+  loading ? <>
+            
+        </> : <>
+            
+            <RouterProvider router={router}/>
+            
+        </>
+
   );
 }
 

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import { CreateUser } from "../../services/nodes";
 import { BrowserRouter, Route, Link  } from 'react-router-dom';
+import Navbars from "../NavigationPanel/Navbar";
 
-export function Tests()
+export function Home()
 {
     
     // const [styleButton, setStyleButton] = useState('bg-blue-500')
@@ -91,7 +92,9 @@ export function Tests()
     // };
 
     return (
+        
         <form className='bg-gray-200'>
+            <div> <Navbars /></div>
             <div className="h-screen flex justify-center items-center">
                 <div className='w-5/6 h-5/6 p-0 border-solid border-0
             border-white-100 rounded-lg bg-white'>

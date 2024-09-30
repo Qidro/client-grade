@@ -93,7 +93,7 @@ export function Aut()
           if (message == "")
           {
            
-            navigate('/test');
+            navigate('/home');
           }
     };
 

@@ -1,7 +1,7 @@
 import {createBrowserRouter, Navigate} from "react-router-dom";
 import { Reg } from "../components/Registration/Registration";
 import { Aut } from "../components/Authorization/Authorization";
-import { Tests } from "../components/Tests/Tests";
+import { Home } from "../components/HomePage/HomePage";
 import { Rec } from "../components/RecoveryPassword/Recovery";
 
 
@@ -21,8 +21,8 @@ export const router = createBrowserRouter([
         element: <Aut />
     },
     {
-        path: "/test",
-        element: <Tests />,
+        path: "/home",
+        element: <Home />,
     },
 {
     path: '/*',
