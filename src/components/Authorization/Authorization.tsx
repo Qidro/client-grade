@@ -93,7 +93,7 @@ export function Aut()
           if (message == "")
           {
            
-            navigate('/Test');
+            navigate('/test');
           }
     };
 
@@ -117,8 +117,8 @@ export function Aut()
                         <button className={styleButton} onClick={CheckUsers} disabled={!formValid} type="button">Авторизоваться</button>
                         {/* поле ошибки регистрации */}
                         <p className="text-xl text-red-600">{message}</p>
-                        <div className="text-blue-800 underline"><Link  to="/reg">Зарегистрироваться</Link></div>
-                        <div className="underline"><Link  to="/rec">Восстановить пароль</Link></div>  
+                        <div className="text-blue-800 underline"><Link  to="/registration">Зарегистрироваться</Link></div>
+                        <div className="underline"><Link  to="/recovery">Восстановить пароль</Link></div>  
                         {/* <Route path="/Reg" element={<Reg/> } /> */}
                     </div>
                 </div>
