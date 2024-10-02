@@ -2,11 +2,13 @@ import { useEffect, useState } from "react"
 import { BrowserRouter, Route, Link, useNavigate  } from 'react-router-dom';
 import { Reg } from "../Registration/Registration";
 import { CheckUser } from "../../services/node";
+import Cookies from 'js-cookie';
 
 export function Aut()
 {
-    
+   
     const [styleButton, setStyleButton] = useState('bg-blue-500')
+    const [styleInput, setStyleInput] = useState('shadow appearance-none border rounded w-full mt-4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
 
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
@@ -20,6 +22,7 @@ export function Aut()
 
     // функция проверки логина
     const loginHander = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setStyleInput('shadow appearance-none border rounded w-full mt-4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline');
         setMessage("");
         setLogin(e.target.value)
         if(e.target.value.length < 3 || e.target.value.length > 15){
@@ -36,6 +39,7 @@ export function Aut()
 
     //функция проверки пароля
     const passwordHander = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setStyleInput('shadow appearance-none border rounded w-full mt-4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline');
         setMessage("");
         setPassword(e.target.value)
         if(e.target.value.length < 8){
@@ -62,8 +66,10 @@ export function Aut()
     }
 
 
+
     //функция отвечающая за видимость кнопки по состоянию веденных полей 
     useEffect( () =>{
+        
         if(loginError || passwordError)
         {
             setFormValid(false)
@@ -80,6 +86,7 @@ export function Aut()
     const navigate = useNavigate();
     const CheckUsers = async() =>
     {   
+       
         // const posts = [
         //     {login: login, firstName: firstName, lastName: lastName, patronymic:Patronymic, email: email, password:password  }
         //   ];
@@ -89,12 +96,24 @@ export function Aut()
               password: password
             }
         console.log("Все прошло успешно");
-          setMessage(await CheckUser(posts));
-          if (message == "")
-          {
-           
-            navigate('/home');
-          }
+          let mess = await CheckUser(posts);
+          console.log(mess);
+          setMessage(mess);
+          CreateCookie(mess);
+          
+    };
+
+    const CreateCookie = async(mess: string ) =>
+    {
+        if (mess == "Успешный вход")
+            {
+              Cookies.set('user', 'Pavel', { expires: 7 }); // Кука будет храниться 7 дней
+              navigate('/home');
+            }
+        else{
+            setStyleInput("placeholder:text-red-400 text-red-400 text-sm border border-red-400 shadow appearance-none border rounded w-full mt-4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline");
+            
+        }
     };
 
     return (
@@ -107,7 +126,10 @@ export function Aut()
                         <h1 className="text-xl">Вход</h1>
                         {/* Поле логина */}
                         {(loginDirty && loginError) && <div style={{color:'red'}}>{loginError}</div>}
-                        <input className="shadow appearance-none border rounded w-full mt-4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onChange={e => loginHander(e)} value={login} onBlur={e => blurHandler(e)} name = "login" type="text" placeholder="Введите ваш логин" />
+                        {/* shadow appearance-none border rounded w-full mt-4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline */}
+                        {/* border border-red-400 shadow appearance-none border rounded w-full mt-4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline */}
+                        {/* placeholder:text-red-400 text-red-400 text-sm border border-red-400 shadow appearance-none border rounded w-full mt-4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline */}
+                        <input className={styleInput} onChange={e => loginHander(e)} value={login} onBlur={e => blurHandler(e)} name = "login" type="text" placeholder="Введите ваш логин" />
                         {/*                         <input className="mt-4 pl-40 pr-4 py-1 border rounded-lg" onChange={e => loginHander(e)} value={login} onBlur={e => blurHandler(e)} name = "login" type="text" placeholder="Введите ваш логин" /> */}
                         {/* Поле пароля */}
                         {(passwordDirty && passwordError) && <div style={{color:'red'}}>{passwordError}</div>}
