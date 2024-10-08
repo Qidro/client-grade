@@ -2,7 +2,7 @@ import React from 'react';
 import {  Link } from "react-router-dom";
 const Navbars= () =>{
   return (
-    <header className='mt-24 py-4 bg-blue-600 py-4'>
+    <header className='mt-0 py-4 bg-blue-600 py-4'>
         <nav className='flex justify-between items-center w-[92%]  mx-auto'>
         <div className="w-16 font-bold text-white">
                 Geeks

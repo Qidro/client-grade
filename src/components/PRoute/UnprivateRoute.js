@@ -1,33 +1,12 @@
-// import React, { useEffect, useRef, useState } from 'react';
-// import { Navigate } from 'react-router-dom';
-
-// const PrivateRoute = ({ children }) => {
-//     const isAuthenticated = true; 
-//     const [isAuthorized, setIsAuthorized] = useState(true); 
-
-//     useEffect(() => { 
-        
-//         setIsAuthorized(false); 
-//         console.log("Значение1", isAuthorized); 
-//     }, []); 
-
-//     console.log("Значение2", isAuthorized); 
-//     return isAuthorized ? children : <Navigate to="/login" />; 
-// }; 
-
-// export default PrivateRoute;
-
-
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { UserAuthentication } from '../../services/node';
 
 
-const PrivateRoute = ({ children }) => {
+const UnPrivateRoute = ({ children }) => {
     const isAuthenticated = true; 
-    const [isAuthorized, setIsAuthorized] = useState(true); 
+    const [isAuthorized, setIsAuthorized] = useState(false); 
 
     useEffect(() => { 
          const CheckUser = async() =>
@@ -70,7 +49,7 @@ const PrivateRoute = ({ children }) => {
     }, []); 
 
     console.log("Значение2", isAuthorized); 
-    return isAuthorized ? children : <Navigate to="/login" />; 
+    return isAuthorized ? <Navigate to="/home" /> : children; 
 }; 
 
-export default PrivateRoute;
+export default UnPrivateRoute;

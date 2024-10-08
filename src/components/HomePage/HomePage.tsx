@@ -100,11 +100,20 @@ export function Home()
             border-white-100 rounded-lg bg-white'>
                     <div className = "pb-4 flex justify-center items-center"><img  src="ugmu-logo.png" alt="неее" width={180} height={180}/></div>
                     <div className="text-center">
-                        <h1 className="text-xl">Тип главная страница</h1>
+                        <h1 className="text-xl">Тип главная страницаа</h1>
                         {/* Поле логина */}
                         {/* {(loginDirty && loginError) && <div style={{color:'red'}}>{loginError}</div>} */}
                         
                     </div>
+                    <div className="grid grid-cols-6 gap-4 gap-x-32 place-items-start">
+                        <div className='ml-16 w-64 h-80 p-0 border-solid border-2
+                border-slate-950 rounded-lg bg-white '></div>
+                    <button><div className='ml-16 w-64 h-80 p-0 border-dashed border-2
+                border-gray-600 rounded-lg bg-white '><img className="mt-16" src="plus1.png" alt="my image" width={300} height={300} /></div></button>
+                    </div>
+                    
+
+                
                 </div>
             </div>
         </form>

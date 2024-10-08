@@ -4,6 +4,7 @@ import { Aut } from "../components/Authorization/Authorization";
 import { Home } from "../components/HomePage/HomePage";
 import { Rec } from "../components/RecoveryPassword/Recovery";
 import PrivateRoute from "../components/PRoute/PrivateRoute";
+import UnPrivateRoute from "../components/PRoute/UnprivateRoute";
 
 
 
@@ -11,20 +12,21 @@ export const router = createBrowserRouter([
     {
         // мои изменения
         path: '/registration',
-        element: <Reg />
+        element: <UnPrivateRoute><Reg /></UnPrivateRoute>
     },
     {
         // мои изменения
         path: '/recovery',
-        element:  <Rec /> 
+        element:  <UnPrivateRoute><Rec /> </UnPrivateRoute>
     },
     {
         path: '/',
-        element: <Aut />
+        element: <UnPrivateRoute><Aut /></UnPrivateRoute>
+        // element: <Aut />
     },
     {
         path: "/home",
-        element: <PrivateRoute><Home /></PrivateRoute>,
+        element: <PrivateRoute><Home /></PrivateRoute>
     },
 {
     path: '/*',
