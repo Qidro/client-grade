@@ -88,3 +88,26 @@ export const RecoveryPassword = async (posts: any) => {
     return("Ошибка");
    }
 }
+
+
+
+
+export const UserAuthentication = async (posts: any) => {
+   try{
+      console.log("Массив: ", posts);
+      const respone = await fetch("http://localhost:5281/CheckJWT", {
+      method: "POST",
+      headers:{
+         "content-type": "application/json",
+      },
+      body: JSON.stringify(posts),
+   })
+   //const data = await respone.text();
+   return(respone);
+    }
+   catch(e)
+   {
+    console.error("Бывает:", e);
+    return(false);
+   }
+}

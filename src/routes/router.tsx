@@ -3,6 +3,8 @@ import { Reg } from "../components/Registration/Registration";
 import { Aut } from "../components/Authorization/Authorization";
 import { Home } from "../components/HomePage/HomePage";
 import { Rec } from "../components/RecoveryPassword/Recovery";
+import PrivateRoute from "../components/PRoute/PrivateRoute";
+
 
 
 export const router = createBrowserRouter([
@@ -14,7 +16,7 @@ export const router = createBrowserRouter([
     {
         // мои изменения
         path: '/recovery',
-        element: <Rec />
+        element:  <Rec /> 
     },
     {
         path: '/',
@@ -22,7 +24,7 @@ export const router = createBrowserRouter([
     },
     {
         path: "/home",
-        element: <Home />,
+        element: <PrivateRoute><Home /></PrivateRoute>,
     },
 {
     path: '/*',
