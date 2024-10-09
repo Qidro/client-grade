@@ -65,7 +65,7 @@ const PrivateRoute = ({ children }) => {
       
     
         
-        console.log("Значение1", false); 
+        //console.log("Значение1", false); 
         CheckUser();
     }, []); 
 

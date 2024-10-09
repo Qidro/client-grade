@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react"
 import { CreateUser } from "../../services/nodes";
-import { BrowserRouter, Route, Link  } from 'react-router-dom';
+import { BrowserRouter, Route, Link, useNavigate  } from 'react-router-dom';
 import Navbars from "../NavigationPanel/Navbar";
+import { Console } from "console";
 
 export function Home()
 {
-    
+    const navigate = useNavigate();
+   const CreateTest = () =>
+   {
+    console.log('маршрут перестраивается');
+    navigate("/create");
+   }
     // const [styleButton, setStyleButton] = useState('bg-blue-500')
 
     // const [login, setLogin] = useState('')
@@ -108,10 +114,9 @@ export function Home()
                     <div className="grid grid-cols-6 gap-4 gap-x-32 place-items-start">
                         <div className='ml-16 w-64 h-80 p-0 border-solid border-2
                 border-slate-950 rounded-lg bg-white '></div>
-                    <button><div className='ml-16 w-64 h-80 p-0 border-dashed border-2
+                    <button onClick={CreateTest}><div className='ml-16 w-64 h-80 p-0 border-dashed border-2
                 border-gray-600 rounded-lg bg-white '><img className="mt-16" src="plus1.png" alt="my image" width={300} height={300} /></div></button>
                     </div>
-                    
 
                 
                 </div>

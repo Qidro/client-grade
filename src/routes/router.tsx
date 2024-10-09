@@ -5,6 +5,7 @@ import { Home } from "../components/HomePage/HomePage";
 import { Rec } from "../components/RecoveryPassword/Recovery";
 import PrivateRoute from "../components/PRoute/PrivateRoute";
 import UnPrivateRoute from "../components/PRoute/UnprivateRoute";
+import {  CreateTestt } from "../components/CreateTest/CreateTest";
 
 
 
@@ -26,7 +27,17 @@ export const router = createBrowserRouter([
     },
     {
         path: "/home",
-        element: <PrivateRoute><Home /></PrivateRoute>
+        element: <PrivateRoute><Home /></PrivateRoute> //,
+        // children: [
+        //     {
+        //         path: 'create',
+        //         element: <CreateTestt />
+        //     }
+        // ]
+    },
+    {
+        path: "/create",
+        element: <PrivateRoute><CreateTestt /></PrivateRoute>
     },
 {
     path: '/*',
