@@ -114,8 +114,8 @@ export function Home()
                     <div className="grid grid-cols-6 gap-4 gap-x-32 place-items-start">
                         <div className='ml-16 w-64 h-80 p-0 border-solid border-2
                 border-slate-950 rounded-lg bg-white '></div>
-                    <button onClick={CreateTest}><div className='ml-16 w-64 h-80 p-0 border-dashed border-2
-                border-gray-600 rounded-lg bg-white '><img className="mt-16" src="plus1.png" alt="my image" width={300} height={300} /></div></button>
+                    <button  onClick={CreateTest} type="button"><div className='ml-16 w-64 h-80 p-0 border-dashed border-2
+                border-gray-600 rounded-lg bg-white ' ><img className="mt-16 opacity-75" src="plus1.png" alt="my image" width={300} height={300} /></div></button>
                     </div>
 
                 

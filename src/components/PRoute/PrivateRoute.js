@@ -32,6 +32,7 @@ const PrivateRoute = ({ children }) => {
     useEffect(() => { 
          const CheckUser = async() =>
     {
+      console.log("Начал проверку");
         try {
           let posts = 
             {
@@ -59,7 +60,7 @@ const PrivateRoute = ({ children }) => {
           }
           }
         
-    } catch (e) {}
+    } catch (e) { setIsAuthorized(false); }
       
     }
       
@@ -67,7 +68,7 @@ const PrivateRoute = ({ children }) => {
         
         //console.log("Значение1", false); 
         CheckUser();
-    }, []); 
+    }); 
 
     console.log("Значение2", isAuthorized); 
     return isAuthorized ? children : <Navigate to="/login" />; 
