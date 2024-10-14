@@ -98,8 +98,9 @@ export function Home()
     // };
 
     return (
-        
+  
         <form className='bg-gray-200'>
+            {/*вывод навиг. панель на экран   */}
             <div> <Navbars /></div>
             <div className="h-screen flex justify-center items-center">
                 <div className='w-5/6 h-5/6 p-0 border-solid border-0

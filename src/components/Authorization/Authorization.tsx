@@ -103,6 +103,7 @@ export function Aut()
           
     };
 
+    //созадние куки пользователя
     const CreateCookie = async(mess: string ) =>
     {
         if (mess == "Ошибка проверки" || mess =="Пользователь не зарегистрирован")
