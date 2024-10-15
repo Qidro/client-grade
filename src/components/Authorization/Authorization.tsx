@@ -73,11 +73,11 @@ export function Aut()
         if(loginError || passwordError)
         {
             setFormValid(false)
-            setStyleButton('mt-1 bg-blue-300 px-20 py-2 text-white rounded-lg')
+            setStyleButton('mt-1 bg-blue-300 text-white rounded-lg  w-5/6 h-10')
         }
         else{
             setFormValid(true)
-            setStyleButton('mt-1 bg-blue-500 px-20 py-2 text-white rounded-lg')
+            setStyleButton('mt-1 bg-blue-500 text-white rounded-lg w-5/6 h-10')
         }
     }
     )
@@ -126,7 +126,7 @@ export function Aut()
         <form className='bg-gray-200'>
             <div className="h-screen flex justify-center items-center">
                 <div className='w-1/4 p-16 border-solid border-0
-            border-white-100 rounded-lg bg-white'>
+            border-white-100 rounded-lg bg-white 2xl:w-1/4 lg:w-1/3 md:w-2/5 sm:w-1/2'>
                     <div className = "pb-4 flex justify-center items-center"><img  src="ugmu-logo.png" alt="неее" width={180} height={180}/></div>
                     <div className="text-center">
                         <h1 className="text-xl">Вход</h1>

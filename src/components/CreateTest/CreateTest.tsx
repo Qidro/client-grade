@@ -31,19 +31,8 @@ export function CreateTestt()
     // setInputFields(inputFields.map(field => (field.id === field.id ? { ...field, id: nextId, valueb: false} : field)));
   };
 
-  // Запасная для первой кнопки
-//   const addInputFieldd = () => {
 
-//     // setInputFields(inputFields.map(field => (field.id === id ? { ...field, valueb} : field)));
-
-//     setInputFields([...inputFields, { id: nextId, value: '', value2: '', stateButton: true }]);
-    
-//     setNextId(nextId + 1);
-
-//     // setInputFields(inputFields.map(field => (field.id === field.id ? { ...field, id: nextId, valueb: false} : field)));
-//   };
-
-  // Функция для обновления значения поля ввода
+  // Функция для обновления значения поля "Название вопроса"
   const handleInputChange = (id: number, value: string) => {
     setInputFields(inputFields.map(field => (field.id === id ? { ...field, value} : field)));
     console.log(inputFields);
@@ -54,7 +43,7 @@ export function CreateTestt()
     
   };
 
-  // Функция для обновления значения поля ввода
+  // Функция для обновления значения поля "Описание вопроса"
   const handleInputChangee = (id: number, value2: string) => {
     setInputFields(inputFields.map(field => (field.id === id ? { ...field, value2} : field)));
     console.log(inputFields);
@@ -83,18 +72,21 @@ export function CreateTestt()
           
           
     };
+
+    //записывает название опроса
     const checkTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
         
         setTitle(e.target.value)
         };
     
+    //записывает описание опроса
     const checkDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
         
         setDescription(e.target.value)
         };
 
 
-//функция отвечающая за видимость кнопки по состоянию веденных полей 
+//при октрытии страницы создает первое поле опроса
 useEffect( () =>{
         
     setInputFields([...inputFields, { id: nextId, value: '', value2: '', stateButton: true }]);
