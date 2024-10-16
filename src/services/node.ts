@@ -132,3 +132,21 @@ export const CreateSurveys = async (posts: any) => {
     return("Ошибка");
    }
 }
+
+
+//функция по проверки юзера
+export const SetUsers = async () => {
+   try{
+      const respone = await fetch("http://localhost:5281/SetUsers", {
+      method: "POST"
+   })
+   const data = await respone.text();
+   console.log("Наш полученный массив пользователей: ", data );
+   return(data);
+    }
+   catch(e)
+   {
+    console.error("Бывает:", e);
+    return("Ошибка");
+   }
+}

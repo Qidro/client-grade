@@ -43,3 +43,4 @@ export const CreateUser = async (posts) => {
     return("Ошибка регистрации");
    }
 }
+
