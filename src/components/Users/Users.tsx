@@ -3,30 +3,48 @@ import { Registration } from "../../data/Registration"
 import {User} from "../../types/user";
 import { title } from "process";
 import Navbars from "../NavigationPanel/Navbar";
-import { SetUsers } from "../../services/node";
-interface ProductProps{
-    product: Registration
-
+import { DeleteUser, SetUsers } from "../../services/node";
+interface DataItem {
+  id: number;
+  login: string;
+  fullName: string;
+  email: string;
+  confirmedEmail: boolean;
+  role: string;
 }
 
 export function Users()
 {
-  const [user, setUser] = useState("")
+  const [user, setUser] = useState<DataItem[]>([]);
 
 
     useEffect( () =>{
-      const CreateUsers = async() =>
+      const UserSet = async() =>
         {   
       
           setUser(await SetUsers());
-          console.log("Нашы данные юзера", user);
         };
-        CreateUsers()
+        UserSet()
     },[]
     )
+    useEffect(() => {
+      console.log("Нашы данные юзера", user);
+  }, [user]);
     
-    
-    
+  const DeleteUsers = async(id: number) =>
+    {   
+       
+        // const posts = [
+        //     {login: login, firstName: firstName, lastName: lastName, patronymic:Patronymic, email: email, password:password  }
+        //   ];
+        let posts = 
+            {
+                Id: id
+            }
+        console.log("Все прошло успешно");
+          await DeleteUser(posts);
+          window.location.reload();
+    };
 
     return (
         <form className='bg-gray-200'>
@@ -38,28 +56,38 @@ export function Users()
                     <h1 className="ml-4 mt-4 text-xl">Пользователи сайта</h1>
                     <div className="text-center">
                     <div>
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <table className="mt-4 w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
             <th scope="col" className="px-6 py-3">Логин</th>
             <th scope="col" className="px-6 py-3">ФИО</th>
             <th scope="col" className="px-6 py-3">Почта</th>
             <th scope="col" className="px-6 py-3">Роль</th>
+            <th scope="col" className="px-6 py-3">Подверждение почты</th>
             {/* <th scope="col" className="px-6 py-3">Департамент</th> */}
           </tr>
         </thead>
         <tbody>
           {/* {data.map(user => ( */}
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            {/* <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Apple MacBook Pro 17"
-                </th> */}
-              <td className="px-6 py-4">aga</td>
+            {/* <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"> */}
+
+              {/* <td className="px-6 py-4">aga</td>
               <td className="px-6 py-4">Осинцев Павел Алексеевич</td>
               <td className="px-6 py-4">pavel.osincev04@mail.ru</td>
               <td className="px-6 py-4">Админ</td>
-            </tr>
+            </tr> */}
           {/* ))} */}
+          {user.map(item => (
+          <tr key={item.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <td className="px-6 py-4">{item.login}</td>
+            <td className="px-6 py-4">{item.fullName}</td>
+            <td className="px-6 py-4">{item.email}</td>
+            <td className="px-6 py-4">{item.role}</td>
+            <td className="px-6 py-4">{item.confirmedEmail.toString()}</td>
+            <td className=""><button type="button"><img src="\icon\pencil\pencil.png" alt="Иконка" width="25" height="25"/></button></td>
+            <td className=""><button type="button" onClick={(e) => DeleteUsers(item.id)}><img src="\icon\trash\trash.png" alt="Иконка" width="30" height="30"/></button></td>
+          </tr>
+        ))}
         </tbody>
       </table>
     </div>

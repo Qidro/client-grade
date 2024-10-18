@@ -16,16 +16,13 @@ const Navbars= () =>{
                 <ul className='flex md:flex-row flex-col 
                            md:items-center md:gap-[4vw] gap-8'>
                     <li className='text-white'>
-                    <Link to="/home">Тесты</Link>
+                    <Link to="/home">Оценка компетенций</Link>
                     </li>
                     <li className='text-white'>
                     <Link to="/users">Пользователи</Link>
                     </li>
                     <li className='text-white'>
-                    <Link to="/sheeps">Sheeps</Link>
-                    </li>
-                    <li className='text-white'>
-                    <Link to="/goats">Goats</Link>
+                    <Link to="/profil">Профиль</Link>
                     </li>
                 </ul>
             </div>

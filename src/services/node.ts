@@ -134,15 +134,34 @@ export const CreateSurveys = async (posts: any) => {
 }
 
 
-//функция по проверки юзера
+//функция по поулчению списка юзера
 export const SetUsers = async () => {
    try{
       const respone = await fetch("http://localhost:5281/SetUsers", {
       method: "POST"
    })
-   const data = await respone.text();
+   const data = await respone.json();
    console.log("Наш полученный массив пользователей: ", data );
    return(data);
+    }
+   catch(e)
+   {
+    console.error("Бывает:", e);
+    return("Ошибка");
+   }
+}
+
+//функция по проверки юзера
+export const DeleteUser = async (posts: any) => {
+   try{
+      console.log("id пользователя ", posts);
+      const respone = await fetch("http://localhost:5281/DeleteUser", {
+      method: "DELETE",
+      headers:{
+         "content-type": "application/json",
+      },
+      body: JSON.stringify(posts),
+   })
     }
    catch(e)
    {
