@@ -12,13 +12,17 @@ export function Reg()
 {
     
     const [styleButton, setStyleButton] = useState('bg-blue-500')
-
+    const [styleJogTitle, setStyleJogTitle] = useState('shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline')
+    const [styleDivisions, setStyleDivisions] = useState('shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline')
+   
     const [login, setLogin] = useState('')
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [Patronymic, setPatronymic] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [jobTitle, setjobTitle] = useState('')
+    const [divisions, setDivisions] = useState('')
 
     const [loginDirty, SetLoginDirty] = useState(false)
     const [firstNameDirty, SetFirstNameDirty] = useState(false)
@@ -104,7 +108,29 @@ export function Reg()
             setEmailError('')
         }
     }
-
+//функция проверки выбора должности
+const jogTitleHander = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setjobTitle(e.target.value)
+    if(jobTitle === "Выберите должность")
+    {
+        setStyleJogTitle('shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline');
+    }
+    else{
+        setStyleJogTitle('shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline');
+    }
+}
+//функция проверки выбора подразделения
+const divisionsHander = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setDivisions(e.target.value)
+    if(jobTitle === "Выберите подразделение")
+    {
+        setStyleDivisions('shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline');
+    }
+    else{
+        setStyleDivisions('shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline');
+    }
+}
+  
     //функция проверки пароля
     const passwordHander = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMessage("");
@@ -146,7 +172,7 @@ export function Reg()
 
     //функция отвечающая за видимость кнопки по состоянию веденных полей 
     useEffect( () =>{
-        if(loginError || firstNameError || lastNameError || PatronymicError || emailError || passwordError)
+        if(loginError || firstNameError || lastNameError || PatronymicError || emailError || passwordError || jobTitle === "Выберите должность" || jobTitle === "" || divisions === "Выберите подразделение" || divisions === "")
         {
             setFormValid(false)
             setStyleButton('mt-1 bg-blue-300 text-white rounded-lg w-full h-10')
@@ -171,6 +197,8 @@ export function Reg()
               lastName: lastName,
               patronymic: Patronymic,
               email: email,
+              jogTitle: jobTitle,
+              divisions: divisions,
               password: password
             }
             setMessage(await CreateUser(posts));
@@ -200,9 +228,22 @@ export function Reg()
                         {/* Поле почты */}
                         {(emailDirty && emailError) && <div style={{color:'red'}}>{emailError}</div>}
                         <input className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onChange={e => emailHander(e)} value={email} onBlur={e => blurHandler(e)} name = "email" type="text" placeholder="Введите почту" />
+                        {/* поле выбора должности */}
+                        <select className={styleJogTitle} onChange={e => jogTitleHander(e)}>
+                            <option >Выберите должность</option>
+                            <option >Cотрудник подразделения УГМУ</option>
+                            <option >Руководитель подразделения УГМУ (АУП)</option>
+                        </select>
+                        {/* поле выбора подразделения */}
+                        <select className={styleDivisions} onChange={e => divisionsHander(e)}>
+                            <option >Выберите подразделение</option>
+                            <option >Ректорат</option>
+                            <option >Управление/отдел/институт</option>
+                        </select>
                         {/* Поле пароля */}
                         {(passwordDirty && passwordError) && <div style={{color:'red'}}>{passwordError}</div>}
                         <input className="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onChange={e => passwordHander(e)} value={password} onBlur={e => blurHandler(e)} name = "password" type="text" placeholder="Введите пароль" />
+                        
                         <button className={styleButton} onClick={CreateUsers} disabled={!formValid} type="button">Зарегистрироваться</button>
                         {/* поле ошибки регистрации */}
                         <p className="text-xl text-red-600">{message}</p>
