@@ -4,6 +4,8 @@ import {User} from "../../types/user";
 import { title } from "process";
 import Navbars from "../NavigationPanel/Navbar";
 import { DeleteUser, SetUsers } from "../../services/node";
+import Overlay from "./overlay";
+
 interface DataItem {
   id: number;
   login: string;
@@ -47,14 +49,21 @@ export function Users()
           await DeleteUser(posts);
           window.location.reload();
     };
-
+    const [isOverlayVisible, setOverlayVisible] = useState(false);
+    const CheckParamUser = () =>
+      {   
+        setOverlayVisible(!isOverlayVisible);
+      };
+    
     return (
         <form className='bg-gray-200'>
             <div> <Navbars /></div>
             <div className="h-screen flex justify-center items-center">
                 <div className='overflow-x-auto whitespace-nowrap w-5/6 h-5/6 p-0 border-solid border-0
             border-white-100 rounded-lg bg-white 2xl:w-5/6 h-5/6 lg:w-5/6 h-5/6 md:w-5/6 h-5/6 sm:w-full'>
-                    
+
+                    <Overlay isVisible={isOverlayVisible} onClose={CheckParamUser}></Overlay>
+
                     <h1 className="ml-4 mt-4 text-xl">Пользователи сайта</h1>
                     <div className="text-center">
                     <div>
@@ -92,7 +101,7 @@ export function Users()
             <td className="px-6 py-4">{item.divisions}</td>
             <td className="px-6 py-4">{item.jogTitle}</td>
             <td className="px-6 py-4">{item.role}</td>
-            <td className=""><button type="button"><img src="\icon\pencil\pencil.png" alt="Иконка" width="25" height="25"/></button></td>
+            <td className=""><button type="button" onClick={(e) => CheckParamUser()}><img src="\icon\pencil\pencil.png" alt="Иконка" width="25" height="25"/></button></td>
             <td className=""><button type="button" onClick={(e) => DeleteUsers(item.id)}><img src="\icon\trash\trash.png" alt="Иконка" width="30" height="30"/></button></td>
           </tr>
         ))}
