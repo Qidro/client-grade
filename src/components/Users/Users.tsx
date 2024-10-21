@@ -10,6 +10,8 @@ interface DataItem {
   fullName: string;
   email: string;
   confirmedEmail: boolean;
+  divisions: string;
+  jogTitle: string;
   role: string;
 }
 
@@ -50,7 +52,7 @@ export function Users()
         <form className='bg-gray-200'>
             <div> <Navbars /></div>
             <div className="h-screen flex justify-center items-center">
-                <div className='w-5/6 h-5/6 p-0 border-solid border-0
+                <div className='overflow-x-auto whitespace-nowrap w-5/6 h-5/6 p-0 border-solid border-0
             border-white-100 rounded-lg bg-white 2xl:w-5/6 h-5/6 lg:w-5/6 h-5/6 md:w-5/6 h-5/6 sm:w-full'>
                     
                     <h1 className="ml-4 mt-4 text-xl">Пользователи сайта</h1>
@@ -62,8 +64,12 @@ export function Users()
             <th scope="col" className="px-6 py-3">Логин</th>
             <th scope="col" className="px-6 py-3">ФИО</th>
             <th scope="col" className="px-6 py-3">Почта</th>
-            <th scope="col" className="px-6 py-3">Роль</th>
             <th scope="col" className="px-6 py-3">Подверждение почты</th>
+            <th scope="col" className="px-6 py-3">Роль</th>
+            <th scope="col" className="px-6 py-3">Подразделение</th>
+            <th scope="col" className="px-6 py-3">Должность</th>
+            <th scope="col" className="px-4 py-3"></th>
+            <th scope="col" className="px-6 py-3"></th>
             {/* <th scope="col" className="px-6 py-3">Департамент</th> */}
           </tr>
         </thead>
@@ -82,8 +88,10 @@ export function Users()
             <td className="px-6 py-4">{item.login}</td>
             <td className="px-6 py-4">{item.fullName}</td>
             <td className="px-6 py-4">{item.email}</td>
-            <td className="px-6 py-4">{item.role}</td>
             <td className="px-6 py-4">{item.confirmedEmail.toString()}</td>
+            <td className="px-6 py-4">{item.divisions}</td>
+            <td className="px-6 py-4">{item.jogTitle}</td>
+            <td className="px-6 py-4">{item.role}</td>
             <td className=""><button type="button"><img src="\icon\pencil\pencil.png" alt="Иконка" width="25" height="25"/></button></td>
             <td className=""><button type="button" onClick={(e) => DeleteUsers(item.id)}><img src="\icon\trash\trash.png" alt="Иконка" width="30" height="30"/></button></td>
           </tr>
@@ -96,8 +104,7 @@ export function Users()
                     </div>
                 </div>
             </div>
-        </form>
-        
+        </form>  
     );
 
 }
