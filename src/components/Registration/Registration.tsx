@@ -122,7 +122,7 @@ const jogTitleHander = (e: React.ChangeEvent<HTMLSelectElement>) => {
 //функция проверки выбора подразделения
 const divisionsHander = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setDivisions(e.target.value)
-    if(jobTitle === "Выберите подразделение")
+    if(divisions === "Выберите подразделение")
     {
         setStyleDivisions('shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline');
     }
