@@ -36,12 +36,12 @@ const Overlay: React.FC<OverlayProps>= ({ isVisible, onClose}) => {
     const [emailError, setEmailError] = useState('Почта не может быть пустым')
     const [passwordError, setPasswordError] = useState('Пароль не может быть пустым')
 
-    
-    const [StyleFirstName, setStyleFirstName] = useState('')
-    const [StyleLastName, setStyleLastName] = useState('')
-    const [StylePatronymic, setStylePatronymic] = useState('')
-    const [StyleEmail, setStyleEmail] = useState('')
-    const [StylePassword, setStylePassword] = useState('')
+    const [StyleLogin, setStyleLogin] = useState('px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
+    const [StyleFirstName, setStyleFirstName] = useState('px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
+    const [StyleLastName, setStyleLastName] = useState('px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
+    const [StylePatronymic, setStylePatronymic] = useState('px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
+    const [StyleEmail, setStyleEmail] = useState('px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
+    const [StylePassword, setStylePassword] = useState('px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
 //функция отвечающая за видимость кнопки по состоянию веденных полей 
 useEffect( () =>{
   if(loginError || firstNameError || lastNameError || PatronymicError || emailError || passwordError || jobTitle === "Выберите должность" || jobTitle === "" || divisions === "Выберите подразделение" || divisions === "")
@@ -63,13 +63,17 @@ useEffect( () =>{
     setLogin(e.target.value)
     if(e.target.value.length < 3){
         setLoginError('Логин меньше 3 символов')
+        setStyleLogin('border-2 border-red-500 px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
     }else if(e.target.value.length > 15){
         setLoginError('Логин больше 15 символов')
+        setStyleLogin('border-2 border-red-500 px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
     }else if(!e.target.value){
         setLoginError('Логин не может быть пустым')
+        setStyleLogin('border-2 border-red-500 px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
     }
     else{
-        setLoginError('')
+      setStyleLogin('px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
+      setLoginError('')
     }
 }
 
@@ -79,10 +83,13 @@ const firstNameHander = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFirstName(e.target.value)
     if(e.target.value.length < 3){
         setFirstNameError('Имя меньше 3 символов')
+        setStyleFirstName('border-2 border-red-500 px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
     }else if(!e.target.value){
+      setStyleFirstName('border-2 border-red-500 px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
         setFirstNameError('Имя не может быть пустым')
     }
     else{
+      setStyleFirstName('px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
         setFirstNameError('')
     }
 }
@@ -92,12 +99,15 @@ const lastNameHander = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage("");
     setLastName(e.target.value)
     if(e.target.value.length < 5){
+      setStyleLastName('border-2 border-red-500 px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
         setLastNameError('Фамилия меньше 5 символов')
     }else if(!e.target.value){
+      setStyleLastName('border-2 border-red-500 px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
         setLastNameError('Фамилия не может быть пустым')
     }
     else{
         setLastNameError('')
+        setStyleLastName('px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
     }
 }
 
@@ -107,11 +117,14 @@ const patronymicHander = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPatronymic(e.target.value)
     if(e.target.value.length < 5){
         setPatronymicError('Отчество меньше 5 символов')
+        setStylePatronymic('border-2 border-red-500 px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
     }else if(!e.target.value){
         setPatronymicError('Отчество не может быть пустым')
+        setStylePatronymic('border-2 border-red-500 px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
     }
     else{
         setPatronymicError('')
+        setStylePatronymic('px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
     }
 }
 
@@ -122,24 +135,34 @@ const emailHander = (e: React.ChangeEvent<HTMLInputElement>) => {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if(!re.test(String(e.target.value).toLocaleLowerCase())){
         setEmailError('Некорректный email')
+        setStyleEmail('border-2 border-red-500 px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
     }else{
         setEmailError('')
+        setStyleEmail('px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
     }
 }
+
 
 
 //функция проверки пароля
 const passwordHander = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage("");
     setPassword(e.target.value)
-    if(e.target.value.length < 8){
-        setPasswordError('Некорректный пароль. Пароль должен иметь более 7 символов')
+    if(e.target.value.length == 0 )
+    {
+        setPasswordError('')
+        setStylePassword('px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
     }else if(!e.target.value)
     {
-        setPasswordError('Пароль не должен быть пустым')
-    }
+        setPasswordError('Некорректный пароль')
+        setStylePassword('border-2 border-red-500 px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
+    }else if(e.target.value.length < 8){
+      setPasswordError('Некорректный пароль. Пароль должен иметь более 7 символов')
+      setStylePassword('border-2 border-red-500 px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
+      }
     else{
         setPasswordError('')
+        setStylePassword('px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
     }
 }
 
@@ -207,27 +230,27 @@ const divisionsHander = (e: React.ChangeEvent<HTMLSelectElement>) => {
         <div className='mt-4 grid grid-cols-8 gap-4'>
           {/* поле фамилии */}
           <div>Фамилия</div>
-          <input type="text" className='border-red-500 px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
+          <input className={StyleLastName} onChange={e => lastNameHander(e)} value={lastName} onBlur={e => blurHandler(e)} name = "lastName" type="text"/>
           {/* border-2 border-red-500 px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline */}
           {/* поле логина */}
           <div className='col-end-6'>Логин</div>
-          <input className='px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline' onChange={e => loginHander(e)} value={login} onBlur={e => blurHandler(e)} name = "login" type="text"/>
+          <input className={StyleLogin} onChange={e => loginHander(e)} value={login} onBlur={e => blurHandler(e)} name = "login" type="text"/>
           
           {/* поле имени */}
           <div>Имя</div>
-          <input type="text" className='px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
+          <input  className={StyleFirstName} onChange={e => firstNameHander(e)} value={firstName} onBlur={e => blurHandler(e)} name = "firstName" type="text" placeholder="Введите имя"/>
           
           {/* поле почты */}
           <div className='col-end-6'>Почта</div>
-          <input type="text" className='px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
+          <input className={StyleEmail} onChange={e => emailHander(e)} value={email} onBlur={e => blurHandler(e)} name = "email" type="text" />
           
           {/* поле отчества */}
           <div>Отчество</div>
-          <input type="text" className='px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
+          <input className={StylePatronymic} onChange={e => patronymicHander(e)} value={Patronymic} onBlur={e => blurHandler(e)} name = "patronymic" type="text"/>
           
           {/* поле пароля */}
           <div className='col-end-6'>Пароль</div>
-          <input type="text" className='px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
+          <input className={StylePassword} onChange={e => passwordHander(e)} value={password} onBlur={e => blurHandler(e)} name = "password" type="text" />
 
           {/* поле выбора должности */}
           <div className=''>Должность</div>
@@ -252,7 +275,7 @@ const divisionsHander = (e: React.ChangeEvent<HTMLSelectElement>) => {
           <span className="ml-3 text-sm font-medium text-gray-700 ">Администратор</span>
           </label>
 
-          <button className={styleButton} type="button">Изменить данные</button>
+          <button className={styleButton} disabled={!formValid} type="button">Изменить данные</button>
         </div>
 
       </div>
