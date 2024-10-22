@@ -1,5 +1,5 @@
 // src/Overlay.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Overlay.css'; // Импортируем стили
 
 interface OverlayProps {
@@ -10,13 +10,162 @@ interface OverlayProps {
 const Overlay: React.FC<OverlayProps>= ({ isVisible, onClose}) => {
   const [jobTitle, setjobTitle] = useState('')
   const [divisions, setDivisions] = useState('')
-  
+  const [message, setMessage] = useState('');
   const [styleButton, setStyleButton] = useState('col-span-2 col-end-9 bg-blue-500 text-white rounded-lg w-full h-10')
 
   const [styleJogTitle, setStyleJogTitle] = useState('col-span-3 shadow appearance-none border rounded w-full px-1 text-gray-400 leading-tight focus:outline-none focus:shadow-outline')
   const [styleDivisions, setStyleDivisions] = useState('col-span-3 shadow appearance-none border rounded w-full px-1 text-gray-400 leading-tight focus:outline-none focus:shadow-outline')
-     
+  const [login, setLogin] = useState('')
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [Patronymic, setPatronymic] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [loginDirty, SetLoginDirty] = useState(false)
+    const [firstNameDirty, SetFirstNameDirty] = useState(false)
+    const [lastNameDirty, SetLastNameDirty] = useState(false)
+    const [PatronymicDirty, SetPatronymicDirty] = useState(false)
+    const [emailDirty, SetEmailDirty] = useState(false)
+    const [passwordDirty, SetPasswordDirty] = useState(false)
+    const[formValid, setFormValid] = useState(false)
+
+    const [loginError, setLoginError] = useState('Логин не может быть пустым')
+    const [firstNameError, setFirstNameError] = useState('Имя не может быть пустым')
+    const [lastNameError, setLastNameError] = useState('Фамилия не может быть пустым')
+    const [PatronymicError, setPatronymicError] = useState('Отчество не может быть пустым')
+    const [emailError, setEmailError] = useState('Почта не может быть пустым')
+    const [passwordError, setPasswordError] = useState('Пароль не может быть пустым')
+
+    
+    const [StyleFirstName, setStyleFirstName] = useState('')
+    const [StyleLastName, setStyleLastName] = useState('')
+    const [StylePatronymic, setStylePatronymic] = useState('')
+    const [StyleEmail, setStyleEmail] = useState('')
+    const [StylePassword, setStylePassword] = useState('')
+//функция отвечающая за видимость кнопки по состоянию веденных полей 
+useEffect( () =>{
+  if(loginError || firstNameError || lastNameError || PatronymicError || emailError || passwordError || jobTitle === "Выберите должность" || jobTitle === "" || divisions === "Выберите подразделение" || divisions === "")
+  {
+      setFormValid(false)
+      setStyleButton('col-span-2 col-end-9 bg-blue-300 text-white rounded-lg w-full h-10')
+  }
+  else{
+      setFormValid(true)
+      setStyleButton('col-span-2 col-end-9 bg-blue-500 text-white rounded-lg w-full h-10')
+  }
+}
+)
   if (!isVisible) return null;
+
+  // функция проверки логина
+  const loginHander = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMessage("");
+    setLogin(e.target.value)
+    if(e.target.value.length < 3){
+        setLoginError('Логин меньше 3 символов')
+    }else if(e.target.value.length > 15){
+        setLoginError('Логин больше 15 символов')
+    }else if(!e.target.value){
+        setLoginError('Логин не может быть пустым')
+    }
+    else{
+        setLoginError('')
+    }
+}
+
+//функция проверки имени
+const firstNameHander = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMessage("");
+    setFirstName(e.target.value)
+    if(e.target.value.length < 3){
+        setFirstNameError('Имя меньше 3 символов')
+    }else if(!e.target.value){
+        setFirstNameError('Имя не может быть пустым')
+    }
+    else{
+        setFirstNameError('')
+    }
+}
+
+//функция проверки Фамилии
+const lastNameHander = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMessage("");
+    setLastName(e.target.value)
+    if(e.target.value.length < 5){
+        setLastNameError('Фамилия меньше 5 символов')
+    }else if(!e.target.value){
+        setLastNameError('Фамилия не может быть пустым')
+    }
+    else{
+        setLastNameError('')
+    }
+}
+
+//функция проверки Отчества
+const patronymicHander = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMessage("");
+    setPatronymic(e.target.value)
+    if(e.target.value.length < 5){
+        setPatronymicError('Отчество меньше 5 символов')
+    }else if(!e.target.value){
+        setPatronymicError('Отчество не может быть пустым')
+    }
+    else{
+        setPatronymicError('')
+    }
+}
+
+//функция проверки email
+const emailHander = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMessage("");
+    setEmail(e.target.value)
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if(!re.test(String(e.target.value).toLocaleLowerCase())){
+        setEmailError('Некорректный email')
+    }else{
+        setEmailError('')
+    }
+}
+
+
+//функция проверки пароля
+const passwordHander = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMessage("");
+    setPassword(e.target.value)
+    if(e.target.value.length < 8){
+        setPasswordError('Некорректный пароль. Пароль должен иметь более 7 символов')
+    }else if(!e.target.value)
+    {
+        setPasswordError('Пароль не должен быть пустым')
+    }
+    else{
+        setPasswordError('')
+    }
+}
+
+//фукнция состояния (пользователь находится вы поле или нет)
+const  blurHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    switch(e.target.name){
+        case 'login':
+            SetLoginDirty(true)
+            break
+        case 'firstName':
+            SetFirstNameDirty(true)
+            break
+        case 'lastName':
+            SetLastNameDirty(true)
+            break
+        case 'patronymic':
+            SetPatronymicDirty(true)
+            break
+        case 'email':
+            SetEmailDirty(true)
+            break
+        case 'password':
+            SetPasswordDirty(true)
+            break
+    }
+}
 
 
   // const ClodeOverlay = () =>
@@ -58,11 +207,11 @@ const divisionsHander = (e: React.ChangeEvent<HTMLSelectElement>) => {
         <div className='mt-4 grid grid-cols-8 gap-4'>
           {/* поле фамилии */}
           <div>Фамилия</div>
-          <input type="text" className='px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
-          
+          <input type="text" className='border-red-500 px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
+          {/* border-2 border-red-500 px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline */}
           {/* поле логина */}
           <div className='col-end-6'>Логин</div>
-          <input type="text" className='px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
+          <input className='px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline' onChange={e => loginHander(e)} value={login} onBlur={e => blurHandler(e)} name = "login" type="text"/>
           
           {/* поле имени */}
           <div>Имя</div>
@@ -102,7 +251,7 @@ const divisionsHander = (e: React.ChangeEvent<HTMLSelectElement>) => {
           <div className="w-9 h-5 bg-gray-200 hover:bg-gray-300 peer-focus:outline-none  rounded-full peer transition-all ease-in-out duration-500 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 hover:peer-checked:bg-blue-700 "></div>
           <span className="ml-3 text-sm font-medium text-gray-700 ">Администратор</span>
           </label>
-          
+
           <button className={styleButton} type="button">Изменить данные</button>
         </div>
 
