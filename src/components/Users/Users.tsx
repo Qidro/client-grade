@@ -21,11 +21,13 @@ export function Users()
 {
   const [user, setUser] = useState<DataItem[]>([]);
 
+  const [Id, setId] = useState(0);
   const [Login, setLogin] = useState("");
   const [FirstName, setFirstName] = useState("");
   const [LastName, setLastName] = useState("");
   const [patronymic, setpatronymic] = useState("");
   const [Email, setEmail] = useState("");
+  const [Role, setRole]= useState(false);
   const [Divisions, setDivisions] = useState("");
   const [JobTitle, setJobTitle] = useState("");
 
@@ -65,8 +67,9 @@ export function Users()
         setOverlayVisible(!isOverlayVisible);
       };
 
-    const CheckParamUser = (login: string, fullName: string, email: string, divisions: string, jobTitle: string) =>
+    const CheckParamUser = (id: number, login: string, fullName: string, email: string, role: string, divisions: string, jobTitle: string) =>
       {   
+        setId(id);
         setLogin(login);
         var last = fullName.split(' ');
         setFirstName(last[1]);
@@ -75,6 +78,14 @@ export function Users()
         setEmail(email);
         setDivisions(divisions);
         setJobTitle(jobTitle);
+
+        if (role == "Администратор")
+        {
+          setRole(true);
+        }
+        else{
+          setRole(false);
+        }
         
         setOverlayVisible(!isOverlayVisible);
       };
@@ -86,7 +97,7 @@ export function Users()
                 <div className='overflow-x-auto whitespace-nowrap w-5/6 h-5/6 p-0 border-solid border-0
             border-white-100 rounded-lg bg-white 2xl:w-5/6 h-5/6 lg:w-5/6 h-5/6 md:w-5/6 h-5/6 sm:w-full'>
 
-                    <Overlay isVisible={isOverlayVisible} onClose={CheckParamUsers} Login={Login} FirstName={FirstName} LastName={LastName} patronymic={patronymic} Email={Email} Divisions={Divisions} JobTitle={JobTitle}></Overlay>
+                    <Overlay isVisible={isOverlayVisible} onClose={CheckParamUsers} Id={Id} Login={Login} FirstName={FirstName} LastName={LastName} patronymic={patronymic} Email={Email} Role={Role} Divisions={Divisions} JobTitle={JobTitle}></Overlay>
 
                     <h1 className="ml-4 mt-4 text-xl">Пользователи сайта</h1>
                     <div className="text-center">
@@ -125,7 +136,7 @@ export function Users()
             <td className="px-6 py-4">{item.divisions}</td>
             <td className="px-6 py-4">{item.jobTitle}</td>
             <td className="px-6 py-4">{item.role}</td>
-            <td className=""><button type="button" onClick={(e) => CheckParamUser(item.login, item.fullName, item.email, item.divisions,item.jobTitle )}><img src="\icon\pencil\pencil.png" alt="Иконка" width="25" height="25"/></button></td>
+            <td className=""><button type="button" onClick={(e) => CheckParamUser(item.id, item.login, item.fullName, item.email, item.role ,item.divisions,item.jobTitle )}><img src="\icon\pencil\pencil.png" alt="Иконка" width="25" height="25"/></button></td>
             <td className=""><button type="button" onClick={(e) => DeleteUsers(item.id)}><img src="\icon\trash\trash.png" alt="Иконка" width="30" height="30"/></button></td>
           </tr>
         ))}

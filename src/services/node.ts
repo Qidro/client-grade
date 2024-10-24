@@ -162,6 +162,8 @@ export const DeleteUser = async (posts: any) => {
       },
       body: JSON.stringify(posts),
    })
+   const data = await respone.text();
+   console.log(data);
     }
    catch(e)
    {
@@ -169,3 +171,24 @@ export const DeleteUser = async (posts: any) => {
     return("Ошибка");
    }
 }
+
+//функция отправления отредактированныъ данных пользователя
+export const EditUser = async (posts: any) => {
+   try{
+      console.log("Массив для обновления данных: ", posts);
+      const respone = await fetch("http://localhost:5281/EditUser", {
+      method: "POST",
+      headers:{
+         "content-type": "application/json",
+      },
+      body: JSON.stringify(posts),
+   })
+   //const data = await respone.text();
+   
+    }
+   catch(e)
+   {
+    console.error("Бывает:", e);
+   }
+}
+

@@ -1,21 +1,25 @@
 // src/Overlay.tsx
 import React, { useEffect, useState } from 'react';
 import './Overlay.css'; // Импортируем стили
+import { EditUser } from '../../services/node';
 
 interface OverlayProps {
   isVisible: boolean;
   onClose: () => void;
-
+  Id : number;
   Login: string;
   FirstName : string;
   LastName : string;
   patronymic : string;
   Email : string;
+  Role: boolean;
   Divisions: string;
   JobTitle: string;
 }
 
-const Overlay: React.FC<OverlayProps>= ({ isVisible, onClose, Login, FirstName, LastName, patronymic, Email, Divisions, JobTitle }) => {
+const Overlay: React.FC<OverlayProps>= ({ isVisible, onClose, Id, Login, FirstName, LastName, patronymic, Email, Role, Divisions, JobTitle }) => {
+  const [role, setRole] = useState(true)
+  const [stringRole, setstringRole] = useState('')
   const [jobTitle, setjobTitle] = useState('')
   const [divisions, setDivisions] = useState('')
   const [message, setMessage] = useState('');
@@ -37,12 +41,12 @@ const Overlay: React.FC<OverlayProps>= ({ isVisible, onClose, Login, FirstName, 
     const [passwordDirty, SetPasswordDirty] = useState(false)
     const[formValid, setFormValid] = useState(false)
 
-    const [loginError, setLoginError] = useState('Логин не может быть пустым')
-    const [firstNameError, setFirstNameError] = useState('Имя не может быть пустым')
-    const [lastNameError, setLastNameError] = useState('Фамилия не может быть пустым')
-    const [PatronymicError, setPatronymicError] = useState('Отчество не может быть пустым')
-    const [emailError, setEmailError] = useState('Почта не может быть пустым')
-    const [passwordError, setPasswordError] = useState('Пароль не может быть пустым')
+    const [loginError, setLoginError] = useState('')
+    const [firstNameError, setFirstNameError] = useState('')
+    const [lastNameError, setLastNameError] = useState('')
+    const [PatronymicError, setPatronymicError] = useState('')
+    const [emailError, setEmailError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
 
     const [StyleLogin, setStyleLogin] = useState('px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
     const [StyleFirstName, setStyleFirstName] = useState('px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
@@ -59,6 +63,7 @@ const Overlay: React.FC<OverlayProps>= ({ isVisible, onClose, Login, FirstName, 
           setLastName(LastName);
           setPatronymic(patronymic);
           setEmail(Email);
+          setRole(Role);
           setDivisions(Divisions);
           setjobTitle(JobTitle);
           
@@ -242,7 +247,49 @@ const divisionsHander = (e: React.ChangeEvent<HTMLSelectElement>) => {
   else{
       setStyleDivisions('col-span-3 shadow appearance-none border rounded w-full px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline');
   }
+
+
+ 
+
 } 
+
+//функция проверки роли
+const roleHander = () => {
+  if(role == true)
+  {
+    setRole(false);
+    setstringRole("Пользователь");
+  }
+  else{
+    setRole(true);
+    setstringRole("Администратор");
+  }
+
+}
+const FunckNull = () => {
+
+  }
+
+const UpdateUser = async() =>
+  {   
+      // const posts = [
+      //     {login: login, firstName: firstName, lastName: lastName, patronymic:Patronymic, email: email, password:password  }
+      //   ];
+      let posts = 
+            {
+              id: Id,
+              login: login,
+              firstName: firstName,
+              lastName: lastName,
+              patronymic: Patronymic,
+              email: email,
+              role: stringRole,
+              divisions: divisions,
+              jobTitle: jobTitle,
+              password: password
+            }
+          await EditUser(posts);
+  };
   return (
     <div className="overlay" >
       <div className="overlay-content w-3/5 h-2/5">
@@ -295,12 +342,13 @@ const divisionsHander = (e: React.ChangeEvent<HTMLSelectElement>) => {
           
           {/* редактировании роли пользователя */}
           <label className="col-span-2 relative flex items-center mb-5 cursor-pointer">
-          <input type="checkbox" value="" className="sr-only peer"/>
+          <input type="checkbox" onClick={roleHander} onChange={e => FunckNull()} checked={role} className="sr-only peer"/>
           <div className="w-9 h-5 bg-gray-200 hover:bg-gray-300 peer-focus:outline-none  rounded-full peer transition-all ease-in-out duration-500 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 hover:peer-checked:bg-blue-700 "></div>
           <span className="ml-3 text-sm font-medium text-gray-700 ">Администратор</span>
           </label>
 
-          <button className={styleButton} disabled={!formValid} type="button">Изменить данные</button>
+          {/* <button className={styleButton} disabled={!formValid} onClick={UpdateUser} type="button">Изменить данные</button> */}
+          <button className={styleButton} disabled={!formValid} onClick={UpdateUser} type="button">Изменить данные</button>
         </div>
 
       </div>

@@ -198,7 +198,7 @@ const divisionsHander = (e: React.ChangeEvent<HTMLSelectElement>) => {
               patronymic: Patronymic,
               email: email,
               divisions: divisions,
-              jogTitle: jobTitle,
+              jobTitle: jobTitle,
               password: password
             }
             setMessage(await CreateUser(posts));
