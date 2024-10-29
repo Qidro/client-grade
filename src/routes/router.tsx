@@ -42,7 +42,7 @@ export const router = createBrowserRouter([
     },
     {
         path: "/users",
-        element: <Users />
+        element: <PrivateRoute><Users /></PrivateRoute>
     },
 {
     path: '/*',

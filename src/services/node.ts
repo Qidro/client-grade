@@ -192,3 +192,28 @@ export const EditUser = async (posts: any) => {
    }
 }
 
+
+//функция поиска пользователя
+export const SearchUser = async (posts: any) => {
+   try{
+      console.log("Массив для обновления данных: ", posts);
+      const respone = await fetch("http://localhost:5281/SetUserRequst", {
+      method: "POST",
+      headers:{
+         "content-type": "application/json",
+      },
+      body: JSON.stringify(posts),
+   })
+   const data = await respone.json();
+   console.log(data);
+   return(data);
+   //const data = await respone.text();
+   
+    }
+   catch(e)
+   {
+    console.error("Бывает:", e);
+    return("Ошибка");
+   }
+}
+

@@ -55,6 +55,7 @@ const Overlay: React.FC<OverlayProps>= ({ isVisible, onClose, Id, Login, FirstNa
     const [StyleEmail, setStyleEmail] = useState('px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
     const [StylePassword, setStylePassword] = useState('px-1 col-span-3 h-6 shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline')
 
+    // парсинг данных в состояния
     useEffect( () =>{
       const UserParse = () =>
         {   
@@ -85,6 +86,7 @@ useEffect( () =>{
   }
 }
 )
+//если пеменнная видимости == false - форма не будет показана
   if (!isVisible) return null;
 
   // функция проверки логина
@@ -266,10 +268,13 @@ const roleHander = () => {
   }
 
 }
+
+//функция заглушка
 const FunckNull = () => {
 
   }
 
+  //функция обновления даных пользователя
 const UpdateUser = async() =>
   {   
       // const posts = [
@@ -289,6 +294,7 @@ const UpdateUser = async() =>
               password: password
             }
           await EditUser(posts);
+          window.location.reload();
   };
   return (
     <div className="overlay" >
