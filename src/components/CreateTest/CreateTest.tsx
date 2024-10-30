@@ -7,10 +7,13 @@ import Navbars from "../NavigationPanel/Navbar";
 
 export function CreateTestt()
 {
-    // Храним список элементов
-  const [inputFields, setInputFields] = useState<{ id: number; value: string; value2: string; stateButton: boolean }[]>([]);
-  const [visibleInputFields, setVisible] = useState<{ id: number; value: boolean }[]>([]);
+    // Храним список элементов формы вопроса
+  const [inputFields, setInputFields] = useState<{ id: number; titleQuestion: string; description: string; stateButton: boolean }[]>([]);
+    //список ответов
+  const [questions, setQuestions] = useState<{ id: number; IdQuestion: number; question: string; comment: string; points: string;  stateButton: boolean }[]>([]);
   const [nextId, setNextId] = useState(0);
+
+  const [nextIdAnswer, setNextIdAnswer] = useState(0);
 
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -22,7 +25,7 @@ export function CreateTestt()
         const updatedFields = prevFields.map(field => (field.id === id ? { ...field, stateButton } : field));
         
         // Добавляем новое поле с инкрементированным id
-        return [...updatedFields, { id: nextId, value: '',value2: '' , stateButton: true }];
+        return [...updatedFields, { id: nextId, titleQuestion: '',description: '' , stateButton: true }];
     });
   
     // Обновляем следующий id
@@ -33,19 +36,15 @@ export function CreateTestt()
 
 
   // Функция для обновления значения поля "Название вопроса"
-  const handleInputChange = (id: number, value: string) => {
-    setInputFields(inputFields.map(field => (field.id === id ? { ...field, value} : field)));
+  const handleInputChange = (id: number, titleQuestion: string) => {
+    setInputFields(inputFields.map(field => (field.id === id ? { ...field, titleQuestion} : field)));
     console.log(inputFields);
-    
-    // setVisible(visibleInputFields.map(field => (field.id === id ? { ...field, value: false } : field)));
-
-
     
   };
 
   // Функция для обновления значения поля "Описание вопроса"
-  const handleInputChangee = (id: number, value2: string) => {
-    setInputFields(inputFields.map(field => (field.id === id ? { ...field, value2} : field)));
+  const handleInputChangee = (id: number, description: string) => {
+    setInputFields(inputFields.map(field => (field.id === id ? { ...field, description} : field)));
     console.log(inputFields);
     
     // setVisible(visibleInputFields.map(field => (field.id === id ? { ...field, value: false } : field)));
@@ -85,13 +84,35 @@ export function CreateTestt()
         setDescription(e.target.value)
         };
 
-
+ // Функция для добавления нового поля вопроса
+ const  addInputChange = (id: number, idQuestion: number, stateButton: boolean) => {
+    setQuestions(prevFields => {
+        
+        const updatedFields = prevFields.map(field => (field.id === idQuestion ? { ...field, stateButton } : field));
+        // Добавляем новое поле с инкрементированным id
+        return [...updatedFields, {id: nextIdAnswer, IdQuestion: id, question: '', comment: '', points: '', stateButton: true  }];
+    });
+    console.log(nextIdAnswer);
+    // Обновляем следующий id
+    setNextIdAnswer(prevId => prevId + 1);
+    
+    // setInputFields(inputFields.map(field => (field.id === field.id ? { ...field, id: nextId, valueb: false} : field)));
+  };
 //при октрытии страницы создает первое поле опроса
+
+
+// Функция для обновления значения поля "Ответа"
+const handleInputQuestion = (id: number,  question: string) => {
+    setQuestions(questions.map(field => (field.id === id ? { ...field, question} : field)));
+    console.log(questions);
+
+};
 useEffect( () =>{
         
-    setInputFields([...inputFields, { id: nextId, value: '', value2: '', stateButton: true }]);
-    
+    setInputFields([...inputFields, { id: nextId, titleQuestion: '', description: '', stateButton: true }]);
+    setQuestions([...questions, {id: nextIdAnswer, IdQuestion: nextId, question: '', comment: '', points: '' , stateButton: true }]);
     setNextId(nextId + 1);
+    setNextIdAnswer(nextIdAnswer + 1);
 
 }
 , [])
@@ -145,8 +166,8 @@ useEffect( () =>{
                     </div> */}
                 {/* тестовая штука */}
                 <div>
-      {/* <button onClick={addInputFieldd}>Добавить поле ввода</button> */}
-      
+ 
+      {/* форма вопроса */}
             {inputFields.map(field => (
                 <div key={field.id} className='mt-16 w-5/6 h-fit p-0 border-solid border-0
                 border-white-100 rounded-lg bg-white'>
@@ -155,7 +176,7 @@ useEffect( () =>{
                         className=" ml-8 mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
                         placeholder="Введи название вопроса"
                     type="text"
-                    value={field.value}
+                    value={field.titleQuestion}
                     onChange={(e) => handleInputChange(field.id, e.target.value)}        
                          />
                     </div>
@@ -165,18 +186,39 @@ useEffect( () =>{
                         className=" ml-8 mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
                         placeholder="Введи описание вопроса"
                     type="text"
-                    value={field.value2}
+                    value={field.description}
                     onChange={(e) => handleInputChangee(field.id, e.target.value)}        
                          />
                     </div>
+                    {/* поля ответа на вопрос*/}
+                    {questions.map(questionMap => (
+
+                        
+                        <div key={questionMap.id} className="relative z-0 w-full mb-5 group">
+                            {questionMap.IdQuestion == field.id  ?<input
+                            className=" ml-8 mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+                            placeholder="Введите вариант ответа"
+                            type="text"
+                            value={questionMap.question}
+                            onChange={(e) => handleInputQuestion(questionMap.id, e.target.value)}        
+                                />: null}
+                        
+
+                    
+                        {questionMap.stateButton ?<button className="mr-4 mb-4 col-start-6 bg-blue-500  w-64 h-10 text-white rounded-lg" onClick={(e) => addInputChange(field.id, questionMap.id, false)} type="button">Добавить поле ввода</button>: null}
+                        </div>
+                        
+                    ))}
+
+
                     <div className="grid grid-cols-6 gap-2 place-items-end">
                 {field.stateButton ? <button className="mr-4 mb-4 col-start-6 bg-blue-500  w-64 h-10 text-white rounded-lg" onClick={(e) => addInputField(field.id, false)} type="button">Добавить поле ввода</button> : null}
                     </div>
                 </div>
       ))}
     </div>
-    <div className="grid grid-cols-6 gap-2 place-items-end">
-                <button className="col-start-5 bg-blue-500 px-20 py-0 text-white rounded-lg" onClick={CreateSurvey}>Сохранить тест</button>
+    <div className="mt-4 grid grid-cols-6 gap-2 place-items-end">
+                <button className="col-start-5 bg-blue-500 h-10 px-20 py-0 text-white rounded-lg" onClick={CreateSurvey}>Сохранить тест</button>
             </div>
             </div>
 
