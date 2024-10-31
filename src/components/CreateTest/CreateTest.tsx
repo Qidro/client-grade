@@ -10,7 +10,7 @@ export function CreateTestt()
     // Храним список элементов формы вопроса
   const [inputFields, setInputFields] = useState<{ id: number; titleQuestion: string; description: string; stateButton: boolean }[]>([]);
     //список ответов
-  const [questions, setQuestions] = useState<{ id: number; IdQuestion: number; question: string; comment: string; points: string;  stateButton: boolean }[]>([]);
+  const [questions, setQuestions] = useState<{ id: number; IdQuestion: number; question: string; comment: string; points: number;  stateButton: boolean }[]>([]);
   const [nextId, setNextId] = useState(0);
 
   const [nextIdAnswer, setNextIdAnswer] = useState(0);
@@ -90,7 +90,7 @@ export function CreateTestt()
         
         const updatedFields = prevFields.map(field => (field.id === idQuestion ? { ...field, stateButton } : field));
         // Добавляем новое поле с инкрементированным id
-        return [...updatedFields, {id: nextIdAnswer, IdQuestion: id, question: '', comment: '', points: '', stateButton: true  }];
+        return [...updatedFields, {id: nextIdAnswer, IdQuestion: id, question: '', comment: '', points: 0, stateButton: true  }];
     });
     console.log(nextIdAnswer);
     // Обновляем следующий id
@@ -107,10 +107,25 @@ const handleInputQuestion = (id: number,  question: string) => {
     console.log(questions);
 
 };
+
+// Функция для обновления значения поля "Ответа"
+const handleInputComment = (id: number,  comment: string) => {
+    setQuestions(questions.map(field => (field.id === id ? { ...field, comment} : field)));
+    console.log(questions);
+
+};
+
+// Функция для обновления значения поля "Баллы"
+const handleInputPoint = (id: number,  points: number) => {
+    setQuestions(questions.map(field => (field.id === id ? { ...field, points} : field)));
+    console.log(questions);
+
+};
+
 useEffect( () =>{
         
     setInputFields([...inputFields, { id: nextId, titleQuestion: '', description: '', stateButton: true }]);
-    setQuestions([...questions, {id: nextIdAnswer, IdQuestion: nextId, question: '', comment: '', points: '' , stateButton: true }]);
+    setQuestions([...questions, {id: nextIdAnswer, IdQuestion: nextId, question: '', comment: '', points: 0 , stateButton: true }]);
     setNextId(nextId + 1);
     setNextIdAnswer(nextIdAnswer + 1);
 
@@ -195,13 +210,25 @@ useEffect( () =>{
 
                         
                         <div key={questionMap.id} className="relative z-0 w-full mb-5 group">
-                            {questionMap.IdQuestion == field.id  ?<input
-                            className=" ml-8 mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
-                            placeholder="Введите вариант ответа"
-                            type="text"
-                            value={questionMap.question}
-                            onChange={(e) => handleInputQuestion(questionMap.id, e.target.value)}        
-                                />: null}
+                            {questionMap.IdQuestion == field.id  ?<><><input
+                                className=" ml-8 mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                placeholder="Введите вариант ответа"
+                                type="text"
+                                value={questionMap.question}
+                                onChange={(e) => handleInputQuestion(questionMap.id, e.target.value)} />
+                                <input
+                                    className=" ml-8 mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                    placeholder="Введите комментарий"
+                                    type="text"
+                                    value={questionMap.comment}
+                                    onChange={(e) => handleInputComment(questionMap.id, e.target.value)} /></>
+                                <input
+                                    className=" ml-8 mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                    placeholder="Введите количество баллов за ответ"
+                                    type="number"
+                                    value={questionMap.points}
+                                    onChange={(e) => handleInputPoint(questionMap.id, Number(e.target.value))} /></>
+                                : null}
                         
 
                     
