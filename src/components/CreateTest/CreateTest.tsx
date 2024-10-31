@@ -137,7 +137,7 @@ useEffect( () =>{
             {/* навигационная панель */}
          <div> <Navbars /></div>
          {/* отступы от краев и расположение формы */}
-            <div className="mt-16 ml-8 h-screen justify-normal items-start">
+            <div className="mt-12 ml-8 h-screen justify-normal items-start">
                 {/* форма отвечающая за описание и название теста */}
                 <div className='w-1/2 h-40 p-0 border-solid border-0
             border-white-100 rounded-lg bg-white'>
@@ -210,37 +210,43 @@ useEffect( () =>{
 
                         
                         <div key={questionMap.id} className="relative z-0 w-full mb-5 group">
-                            {questionMap.IdQuestion == field.id  ?<><><input
-                                className=" ml-8 mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            <ul className="list-none">
+                            {questionMap.IdQuestion == field.id  ?<><>
+                            <li className="ml-12 list-disc"><input
+                                className=" mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                 placeholder="Введите вариант ответа"
                                 type="text"
                                 value={questionMap.question}
-                                onChange={(e) => handleInputQuestion(questionMap.id, e.target.value)} />
-                                <input
-                                    className=" ml-8 mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                onChange={(e) => handleInputQuestion(questionMap.id, e.target.value)} /></li>
+                                 <li className="ml-12 list-disc"><input
+                                    className=" mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     placeholder="Введите комментарий"
                                     type="text"
                                     value={questionMap.comment}
-                                    onChange={(e) => handleInputComment(questionMap.id, e.target.value)} /></>
-                                <input
-                                    className=" ml-8 mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                    onChange={(e) => handleInputComment(questionMap.id, e.target.value)} /></li></>
+                                <li className="ml-12 list-disc"> <input
+                                    className=" mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     placeholder="Введите количество баллов за ответ"
                                     type="number"
                                     value={questionMap.points}
-                                    onChange={(e) => handleInputPoint(questionMap.id, Number(e.target.value))} /></>
-                                : null}
+                                    onChange={(e) => handleInputPoint(questionMap.id, Number(e.target.value))} /></li></>
+                                : null}</ul>
+                            
                         
 
                     
-                        {questionMap.stateButton ?<button className="mr-4 mb-4 col-start-6 bg-blue-500  w-64 h-10 text-white rounded-lg" onClick={(e) => addInputChange(field.id, questionMap.id, false)} type="button">Добавить поле ввода</button>: null}
+                        {questionMap.stateButton ?<button className="ml-8 mt-4 col-start-6 bg-blue-500  w-64 h-10 text-white rounded-lg" onClick={(e) => addInputChange(field.id, questionMap.id, false)} type="button">Добавить вариант ответа</button>: null}
                         </div>
                         
                     ))}
 
 
-                    <div className="grid grid-cols-6 gap-2 place-items-end">
-                {field.stateButton ? <button className="mr-4 mb-4 col-start-6 bg-blue-500  w-64 h-10 text-white rounded-lg" onClick={(e) => addInputField(field.id, false)} type="button">Добавить поле ввода</button> : null}
-                    </div>
+                    <div className="flex justify-end">
+                    {field.stateButton ?  <button className="mr-4 mb-4 col-start-6 bg-red-500  w-64 h-10 text-white rounded-lg" onClick={(e) => addInputField(field.id, false)} type="button">Удалить вопрос вопрос</button>: null}
+                {field.stateButton ?  <button className="mr-4 mb-4 col-start-6 bg-blue-500  w-64 h-10 text-white rounded-lg" onClick={(e) => addInputField(field.id, false)} type="button">Дублировать вопрос</button>: null}
+                {field.stateButton ? <button className="mr-4 mb-4 col-start-6 bg-blue-500  w-64 h-10 text-white rounded-lg" onClick={(e) => addInputField(field.id, false)} type="button">Добавить вопрос</button> : null}
+                {!field.stateButton ?  <button className="mr-4 mb-4 col-start-6 bg-blue-500  w-64 h-10 text-white rounded-lg" onClick={(e) => addInputField(field.id, false)} type="button">Дублировать вопрос</button>: null}
+                   </div>
                 </div>
       ))}
     </div>
