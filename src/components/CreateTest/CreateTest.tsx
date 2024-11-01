@@ -86,9 +86,10 @@ export function CreateTestt()
 
  // Функция для добавления нового поля вопроса
  const  addInputChange = (id: number, idQuestion: number, stateButton: boolean) => {
+    console.log("id", id, "QId", idQuestion);
     setQuestions(prevFields => {
         
-        const updatedFields = prevFields.map(field => (field.id === idQuestion ? { ...field, stateButton } : field));
+        const updatedFields = prevFields.map(field => (field.id === idQuestion  ? { ...field, stateButton } : field));
         // Добавляем новое поле с инкрементированным id
         return [...updatedFields, {id: nextIdAnswer, IdQuestion: id, question: '', comment: '', points: 0, stateButton: true  }];
     });
@@ -120,6 +121,84 @@ const handleInputPoint = (id: number,  points: number) => {
     setQuestions(questions.map(field => (field.id === id ? { ...field, points} : field)));
     console.log(questions);
 
+};
+
+const deleteAnswer = (id: number) => { 
+    if (questions.length > 1) {
+        setQuestions(prevQuestions => {
+            // Фильтруем вопросы и создаем новый массив без удаляемого элемента
+            const newQuestions = prevQuestions.filter(item => item.id !== id);
+            const deletedQuestion = prevQuestions.find(item => item.id === id);
+            
+            // Проверяем, был ли удаленный элемент с stateButton равным true
+            if (deletedQuestion && deletedQuestion.stateButton) {
+                // Находим индекс элемента с меньшим IdQuestion
+                const smallerIdQuestionIndex = newQuestions.findIndex(item => item.id < deletedQuestion.id);
+                
+                // Если такой элемент найден, создаем новый объект с обновленным stateButton
+                if (smallerIdQuestionIndex !== -1) {
+                    const updatedSmallerItem = { 
+                        ...newQuestions[smallerIdQuestionIndex], 
+                        stateButton: true 
+                    };
+                    
+                    // Обновляем элемент в новом массиве
+                    newQuestions[smallerIdQuestionIndex] = updatedSmallerItem;
+                }
+            }
+
+            return newQuestions;
+        });
+    }
+};
+
+//удаление вопроса
+const deleteItem = (id: number) => {
+    if (inputFields.length > 1)
+    {
+        setInputFields((prevFields) => {
+            const newFields = [...prevFields];
+        
+            // Проверяем, есть ли элементы в массиве
+            if (newFields.length > 0) {
+              // Проверяем последний элемент
+              const lastElement = newFields[newFields.length - 1];
+        
+              // Если последний элемент имеет stateButton === true
+              if (lastElement.stateButton === true) {
+                // Меняем stateButton предыдущего элемента на true, если он существует
+                if (newFields.length > 1) {
+                  newFields[newFields.length - 2].stateButton = true;
+                }
+              }
+            }
+        
+            return newFields;
+          });
+          setQuestions(prevQuestions => {
+            const newQuestions = prevQuestions.filter(item => item.id !== id);
+            const deletedQuestion = prevQuestions.find(item => item.id === id);
+            
+            // Проверяем, был ли удаленный элемент с stateButton равным true
+            if (deletedQuestion && deletedQuestion.stateButton) {
+                // Находим элемент с меньшим IdQuestion
+                const smallerIdQuestionIndex = newQuestions.findIndex(item => item.IdQuestion < deletedQuestion.IdQuestion);
+                
+                // Если такой элемент найден, создаем новый массив с обновленным stateButton
+                if (smallerIdQuestionIndex !== -1) {
+                    const updatedSmallerItem = { ...newQuestions[smallerIdQuestionIndex], stateButton: true };
+                    newQuestions[smallerIdQuestionIndex] = updatedSmallerItem;
+                }
+            }
+
+            return newQuestions;
+        });
+          
+        const updatedItems = inputFields.filter(item => item.id !== id);
+        setInputFields(updatedItems);
+
+    }
+    
 };
 
 useEffect( () =>{
@@ -211,25 +290,27 @@ useEffect( () =>{
                         
                         <div key={questionMap.id} className="relative z-0 w-full mb-5 group">
                             <ul className="list-none">
-                            {questionMap.IdQuestion == field.id  ?<><>
-                            <li className="ml-12 list-disc"><input
-                                className=" mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder="Введите вариант ответа"
-                                type="text"
-                                value={questionMap.question}
-                                onChange={(e) => handleInputQuestion(questionMap.id, e.target.value)} /></li>
-                                 <li className="ml-12 list-disc"><input
-                                    className=" mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                    placeholder="Введите комментарий"
-                                    type="text"
-                                    value={questionMap.comment}
-                                    onChange={(e) => handleInputComment(questionMap.id, e.target.value)} /></li></>
-                                <li className="ml-12 list-disc"> <input
-                                    className=" mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                    placeholder="Введите количество баллов за ответ"
-                                    type="number"
-                                    value={questionMap.points}
-                                    onChange={(e) => handleInputPoint(questionMap.id, Number(e.target.value))} /></li></>
+                            {questionMap.IdQuestion == field.id  ?<><><>
+                                    <li className="ml-12 list-disc"><input
+                                        className=" mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                        placeholder="Введите вариант ответа"
+                                        type="text"
+                                        value={questionMap.question}
+                                        onChange={(e) => handleInputQuestion(questionMap.id, e.target.value)} /> </li>
+                                    <li className="ml-12 list-disc"><input
+                                        className=" mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                        placeholder="Введите комментарий"
+                                        type="text"
+                                        value={questionMap.comment}
+                                        onChange={(e) => handleInputComment(questionMap.id, e.target.value)} /></li></>
+                                    <li className="ml-12 list-disc"> <input
+                                        className=" mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                        placeholder="Введите количество баллов за ответ"
+                                        type="number"
+                                        value={questionMap.points}
+                                        onChange={(e) => handleInputPoint(questionMap.id, Number(e.target.value))} /></li></>
+                                        <li><button className="ml-8 mt-4 col-start-6 bg-red-500  w-64 h-10 text-white rounded-lg" onClick={(e) => deleteAnswer(questionMap.id)} type="button">Удалить ответ</button>
+                                         </li></>   
                                 : null}</ul>
                             
                         
@@ -242,7 +323,7 @@ useEffect( () =>{
 
 
                     <div className="flex justify-end">
-                    {field.stateButton ?  <button className="mr-4 mb-4 col-start-6 bg-red-500  w-64 h-10 text-white rounded-lg" onClick={(e) => addInputField(field.id, false)} type="button">Удалить вопрос вопрос</button>: null}
+                    <button className="mr-4 mb-4 col-start-6 bg-red-500  w-64 h-10 text-white rounded-lg" onClick={(e) => deleteItem(field.id)} type="button">Удалить вопрос</button>
                 {field.stateButton ?  <button className="mr-4 mb-4 col-start-6 bg-blue-500  w-64 h-10 text-white rounded-lg" onClick={(e) => addInputField(field.id, false)} type="button">Дублировать вопрос</button>: null}
                 {field.stateButton ? <button className="mr-4 mb-4 col-start-6 bg-blue-500  w-64 h-10 text-white rounded-lg" onClick={(e) => addInputField(field.id, false)} type="button">Добавить вопрос</button> : null}
                 {!field.stateButton ?  <button className="mr-4 mb-4 col-start-6 bg-blue-500  w-64 h-10 text-white rounded-lg" onClick={(e) => addInputField(field.id, false)} type="button">Дублировать вопрос</button>: null}
