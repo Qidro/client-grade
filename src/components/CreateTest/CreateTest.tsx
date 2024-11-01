@@ -123,6 +123,8 @@ const handleInputPoint = (id: number,  points: number) => {
 
 };
 
+
+//удаление варианта ответа
 const deleteAnswer = (id: number) => { 
     if (questions.length > 1) {
         setQuestions(prevQuestions => {
@@ -201,6 +203,7 @@ const deleteItem = (id: number) => {
     
 };
 
+//создани епервых строк
 useEffect( () =>{
         
     setInputFields([...inputFields, { id: nextId, titleQuestion: '', description: '', stateButton: true }]);
@@ -296,7 +299,7 @@ useEffect( () =>{
                                         placeholder="Введите вариант ответа"
                                         type="text"
                                         value={questionMap.question}
-                                        onChange={(e) => handleInputQuestion(questionMap.id, e.target.value)} /> </li>
+                                        onChange={(e) => handleInputQuestion(questionMap.id, e.target.value)} /><button type="button" onClick={(e) => deleteAnswer(questionMap.id)}><img src="\icon\trash\trash.png" alt="Иконка" width="30" height="30"/></button> </li>
                                     <li className="ml-12 list-disc"><input
                                         className=" mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                         placeholder="Введите комментарий"
@@ -309,8 +312,9 @@ useEffect( () =>{
                                         type="number"
                                         value={questionMap.points}
                                         onChange={(e) => handleInputPoint(questionMap.id, Number(e.target.value))} /></li></>
-                                        <li><button className="ml-8 mt-4 col-start-6 bg-red-500  w-64 h-10 text-white rounded-lg" onClick={(e) => deleteAnswer(questionMap.id)} type="button">Удалить ответ</button>
-                                         </li></>   
+                                        {/* <li> <button className="ml-8 mt-4 col-start-6 bg-red-500  w-64 h-10 text-white rounded-lg" onClick={(e) => deleteAnswer(questionMap.id)} type="button">Удалить ответ</button>
+                                         </li> */}
+                                         </>   
                                 : null}</ul>
                             
                         
