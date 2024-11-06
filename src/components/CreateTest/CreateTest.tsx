@@ -60,13 +60,34 @@ export function CreateTestt()
         // const posts = [
         //     {login: login, firstName: firstName, lastName: lastName, patronymic:Patronymic, email: email, password:password  }
         //   ];
-        let posts = 
+        let surveyInformation = 
             {
                 title: title,
-                description: description
+                description: description,
+                titleQuestion: inputFields.map(field => field.titleQuestion),
+                descriptionQuestion: inputFields.map(field => field.description),
+                IdQuestion: questions.map(field => field.IdQuestion), 
+                question: questions.map(field => field.question),
+                comment: questions.map(field => field.comment),
+                points: questions.map(field => field.points)
             }
-        console.log("Все прошло успешно");
-          let mess = await CreateSurveys(posts);
+        
+        // let question =
+        // {
+        //     titleQuestion: inputFields.map(field => field.titleQuestion),
+        //     description: inputFields.map(field => field.description)
+
+        // }
+
+        // let answers = 
+        // {
+        //     IdQuestion: questions.map(field => field.IdQuestion), 
+        //     question: questions.map(field => field.question),
+        //     comment: questions.map(field => field.comment),
+        //     points: questions.map(field => field.points)
+        // }
+
+          let mess = await CreateSurveys(surveyInformation);
           console.log(mess);
           
           
@@ -336,7 +357,7 @@ useEffect( () =>{
       ))}
     </div>
     <div className="mt-4 grid grid-cols-6 gap-2 place-items-end">
-                <button className="col-start-5 bg-blue-500 h-10 px-20 py-0 text-white rounded-lg" onClick={CreateSurvey}>Сохранить тест</button>
+                <button type="button" className="col-start-5 bg-blue-500 h-10 px-20 py-0 text-white rounded-lg" onClick={CreateSurvey}>Сохранить тест</button>
             </div>
             </div>
 

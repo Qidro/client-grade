@@ -113,15 +113,15 @@ export const UserAuthentication = async (posts: any) => {
 }
 
 //функция по проверки юзера
-export const CreateSurveys = async (posts: any) => {
+export const CreateSurveys = async (surveyInformation: any) => {
    try{
-      console.log("Массив: ", posts);
+      console.log("Массив: ", surveyInformation);
       const respone = await fetch("http://localhost:5281/CreateSurvey", {
       method: "POST",
       headers:{
          "content-type": "application/json",
       },
-      body: JSON.stringify(posts),
+      body: JSON.stringify(surveyInformation),
    })
    const data = await respone.text();
    return(data);
