@@ -3,9 +3,25 @@ import { CreateUser } from "../../services/nodes";
 import { BrowserRouter, Route, Link, useNavigate  } from 'react-router-dom';
 import Navbars from "../NavigationPanel/Navbar";
 import { Console } from "console";
+import Cookies from "js-cookie";
+import { CheckRole } from "../../services/node";
 
 export function Home()
 {
+    const [result, setResult]  = useState(true);
+    useEffect ( ()=>{
+        const CheckUserRole = async() =>
+        {
+            let posts = 
+            {
+              token: Cookies.get('user')
+            }
+            setResult(await CheckRole(posts));
+        // console.log("Значение"+result);
+        };
+        
+        CheckUserRole()
+    },[])
     const navigate = useNavigate();
    const CreateTest = () =>
    {
@@ -112,11 +128,11 @@ export function Home()
                         {/* {(loginDirty && loginError) && <div style={{color:'red'}}>{loginError}</div>} */}
                         
                     </div>
-                    <div className="grid grid-cols-6 gap-4 gap-x-32 place-items-start">
+                  <div className="grid grid-cols-6 gap-4 gap-x-32 place-items-start">
                         <div className='ml-16 w-64 h-80 p-0 border-solid border-2
                 border-slate-950 rounded-lg bg-white '></div>
-                    <button  onClick={CreateTest} type="button"><div className='ml-24 w-64 h-80 p-0 border-dashed border-2
-                border-gray-600 rounded-lg bg-white 2xl:ml-24 lg:ml-40 md:ml-64 sm:ml-64' ><img className="mt-16 opacity-75" src="plus1.png" alt="my image" width={300} height={300} /></div></button>
+                     { result ? <button  onClick={CreateTest} type="button"><div className='ml-24 w-64 h-80 p-0 border-dashed border-2
+                border-gray-600 rounded-lg bg-white 2xl:ml-24 lg:ml-40 md:ml-64 sm:ml-64' ><img className="mt-16 opacity-75" src="plus1.png" alt="my image" width={300} height={300} /></div></button>: null }
                     </div>
 
                 

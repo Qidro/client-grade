@@ -7,6 +7,7 @@ import PrivateRoute from "../components/PRoute/PrivateRoute";
 import UnPrivateRoute from "../components/PRoute/UnprivateRoute";
 import {  CreateTestt } from "../components/CreateTest/CreateTest";
 import { Users } from "../components/Users/Users";
+import PrivateRouteRole from "../components/PRoute/PrivateRouteRole";
 
 
 
@@ -38,11 +39,11 @@ export const router = createBrowserRouter([
     },
     {
         path: "/create",
-        element: <PrivateRoute><CreateTestt /></PrivateRoute>
+        element: <PrivateRouteRole><CreateTestt /></PrivateRouteRole>
     },
     {
         path: "/users",
-        element: <PrivateRoute><Users /></PrivateRoute>
+        element: <PrivateRouteRole><Users /></PrivateRouteRole>
     },
 {
     path: '/*',

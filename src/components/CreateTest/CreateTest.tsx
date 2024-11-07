@@ -8,7 +8,7 @@ import Navbars from "../NavigationPanel/Navbar";
 export function CreateTestt()
 {
     // Храним список элементов формы вопроса
-  const [inputFields, setInputFields] = useState<{ id: number; titleQuestion: string; description: string; stateButton: boolean }[]>([]);
+  const [inputFields, setInputFields] = useState<{ id: number; titleQuestion: string; description: string; level: number; stateButton: boolean }[]>([]);
     //список ответов
   const [questions, setQuestions] = useState<{ id: number; IdQuestion: number; question: string; comment: string; points: number;  stateButton: boolean }[]>([]);
   const [nextId, setNextId] = useState(0);
@@ -25,7 +25,7 @@ export function CreateTestt()
         const updatedFields = prevFields.map(field => (field.id === id ? { ...field, stateButton } : field));
         
         // Добавляем новое поле с инкрементированным id
-        return [...updatedFields, { id: nextId, titleQuestion: '',description: '' , stateButton: true }];
+        return [...updatedFields, { id: nextId, titleQuestion: '',description: '', level: 1 , stateButton: true }];
     });
   
     // Обновляем следующий id
@@ -38,6 +38,13 @@ export function CreateTestt()
   // Функция для обновления значения поля "Название вопроса"
   const handleInputChange = (id: number, titleQuestion: string) => {
     setInputFields(inputFields.map(field => (field.id === id ? { ...field, titleQuestion} : field)));
+    console.log(inputFields);
+    
+  };
+
+   // Функция для обновления значения поля "Левел вопроса"
+   const levelInputChange = (id: number, level: number) => {
+    setInputFields(inputFields.map(field => (field.id === id ? { ...field, level} : field)));
     console.log(inputFields);
     
   };
@@ -61,11 +68,13 @@ export function CreateTestt()
         //     {login: login, firstName: firstName, lastName: lastName, patronymic:Patronymic, email: email, password:password  }
         //   ];
         let surveyInformation = 
-            {
+            {   
                 title: title,
                 description: description,
+                idQ: inputFields.map(field => field.id),
                 titleQuestion: inputFields.map(field => field.titleQuestion),
                 descriptionQuestion: inputFields.map(field => field.description),
+                level: inputFields.map(field => field.level),
                 IdQuestion: questions.map(field => field.IdQuestion), 
                 question: questions.map(field => field.question),
                 comment: questions.map(field => field.comment),
@@ -227,7 +236,7 @@ const deleteItem = (id: number) => {
 //создани епервых строк
 useEffect( () =>{
         
-    setInputFields([...inputFields, { id: nextId, titleQuestion: '', description: '', stateButton: true }]);
+    setInputFields([...inputFields, { id: nextId, titleQuestion: '', description: '', level: 1 , stateButton: true }]);
     setQuestions([...questions, {id: nextIdAnswer, IdQuestion: nextId, question: '', comment: '', points: 0 , stateButton: true }]);
     setNextId(nextId + 1);
     setNextIdAnswer(nextIdAnswer + 1);
@@ -291,12 +300,19 @@ useEffect( () =>{
                 border-white-100 rounded-lg bg-white'>
                     <div className="relative z-0 w-full mb-5 group">
                         <input
-                        className=" ml-8 mt-4 w-5/6 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+                        className=" ml-8 mt-4 w-3/4 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
                         placeholder="Введи название вопроса"
                     type="text"
                     value={field.titleQuestion}
                     onChange={(e) => handleInputChange(field.id, e.target.value)}        
                          />
+                    <input
+                                        className=" ml-4 w-28 py-2 px-2 text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                        placeholder="Уровень"
+                                        type="number"
+                                        value={field.level}
+                                        onChange={(e) => levelInputChange(field.id, Number(e.target.value))} />
+                         
                     </div>
 
                     <div className="relative z-0 w-full mb-5 group">

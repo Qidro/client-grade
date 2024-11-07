@@ -91,11 +91,32 @@ export const RecoveryPassword = async (posts: any) => {
 
 
 
-
+//проверка на авторизацию юзера
 export const UserAuthentication = async (posts: any) => {
    try{
       console.log("Массив: ", posts);
       const respone = await fetch("http://localhost:5281/CheckJWT", {
+      method: "POST",
+      headers:{
+         "content-type": "application/json",
+      },
+      body: JSON.stringify(posts),
+   })
+   //const data = await respone.text();
+   return(respone.ok);
+    }
+   catch(e)
+   {
+    console.error("Бывает:", e);
+    return(false);
+   }
+}
+
+//проверка на роль юзера
+export const CheckRole = async (posts: any) => {
+   try{
+      console.log("Массив: ", posts);
+      const respone = await fetch("http://localhost:5281/CheckAdminRole", {
       method: "POST",
       headers:{
          "content-type": "application/json",
@@ -177,7 +198,7 @@ export const EditUser = async (posts: any) => {
    try{
       console.log("Массив для обновления данных: ", posts);
       const respone = await fetch("http://localhost:5281/EditUser", {
-      method: "POST",
+      method: "PUT",
       headers:{
          "content-type": "application/json",
       },
