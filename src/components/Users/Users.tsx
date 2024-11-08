@@ -21,6 +21,8 @@ interface DataItem {
 
 export function Users()
 {
+  const [loading, setLoading] = useState(true);
+
   const [user, setUser] = useState<DataItem[]>([]);
 
   //состояния, которые будут привязаны к определенному пользователю и отправлены в overlay
@@ -36,6 +38,10 @@ export function Users()
 
   //получение данных юзеров
     useEffect( () =>{
+      setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
       const UserSet = async() =>
         {   
       
@@ -99,8 +105,13 @@ export function Users()
       };
     
     return (
+      <div>
+        {loading ? 
+        <div className="loader-container">
+            <div className="spinner"></div>
+        </div> :
         <form className='bg-gray-200'>
-            <div> <Navbars /></div>
+            <div> <Navbars access = {true}/></div>
             <div className="h-screen flex justify-center items-center">
                 <div className='overflow-x-auto whitespace-nowrap w-5/6 h-5/6 p-0 border-solid border-0
             border-white-100 rounded-lg bg-white 2xl:w-5/6 h-5/6 lg:w-5/6 h-5/6 md:w-5/6 h-5/6 sm:w-full'>
@@ -159,7 +170,8 @@ export function Users()
                     </div>
                 </div>
             </div>
-        </form>  
+        </form>}  
+        </div>
     );
 
 }

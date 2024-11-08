@@ -238,3 +238,19 @@ export const SearchUser = async (posts: any) => {
    }
 }
 
+//функция по поулчению списка юзера
+export const SetSurveysList = async () => {
+   try{
+      const respone = await fetch("http://localhost:5281/SetSurveys", {
+      method: "GET"
+   })
+   const data = await respone.json();
+   console.log("Наш полученный массив опросов: ", data );
+   return(data);
+    }
+   catch(e)
+   {
+    console.error("Бывает:", e);
+    return("Ошибка");
+   }
+}

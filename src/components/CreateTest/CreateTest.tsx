@@ -7,6 +7,7 @@ import Navbars from "../NavigationPanel/Navbar";
 
 export function CreateTestt()
 {
+    const [loading, setLoading] = useState(true);
     // Храним список элементов формы вопроса
   const [inputFields, setInputFields] = useState<{ id: number; titleQuestion: string; description: string; level: number; stateButton: boolean }[]>([]);
     //список ответов
@@ -60,7 +61,7 @@ export function CreateTestt()
     
   };
 
-
+  const navigate = useNavigate();
   const CreateSurvey = async() =>
     {   
        
@@ -98,7 +99,7 @@ export function CreateTestt()
 
           let mess = await CreateSurveys(surveyInformation);
           console.log(mess);
-          
+          navigate("/home");
           
     };
 
@@ -233,9 +234,34 @@ const deleteItem = (id: number) => {
     
 };
 
+const duplication = (id: number) => 
+{
+        const newQuestions = questions.filter(item => item.IdQuestion !== id);
+        const updatedQuestions = newQuestions.map(question => ({
+            ...question,
+            id: question.id + 1,
+            IdQuestion: question.IdQuestion +1,
+          }));
+        setQuestions(questions.map(field => ({ ...field, updatedQuestions})));
+     
+        const newInputFields = inputFields.filter(item => item.id !== id);
+        const updatedInputFields = newInputFields.map(fields => ({
+            ...fields,
+            id: fields.id + 1,
+          }));
+        setInputFields(inputFields.map(field => (field.id === id ? { ...field, updatedInputFields} : field)));
+
+
+        
+
+}
+
 //создани епервых строк
 useEffect( () =>{
-        
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
     setInputFields([...inputFields, { id: nextId, titleQuestion: '', description: '', level: 1 , stateButton: true }]);
     setQuestions([...questions, {id: nextIdAnswer, IdQuestion: nextId, question: '', comment: '', points: 0 , stateButton: true }]);
     setNextId(nextId + 1);
@@ -245,9 +271,14 @@ useEffect( () =>{
 , [])
 
     return (
+        <div>
+        {loading ? 
+        <div className="loader-container">
+            <div className="spinner"></div>
+        </div> :
         <form>
             {/* навигационная панель */}
-         <div> <Navbars /></div>
+         <div> <Navbars access = {true}/></div>
          {/* отступы от краев и расположение формы */}
             <div className="mt-12 ml-8 h-screen justify-normal items-start">
                 {/* форма отвечающая за описание и название теста */}
@@ -378,7 +409,8 @@ useEffect( () =>{
             </div>
 
             
-        </form>
+        </form>}
+        </div>
         
     );
 

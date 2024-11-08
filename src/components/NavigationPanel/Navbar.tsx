@@ -1,8 +1,12 @@
 import React from 'react';
 import {  Link } from "react-router-dom";
 
-//нафигационная панель
-const Navbars= () =>{
+interface NavbarsProps {
+  access: boolean;
+}
+
+const Navbars = ({ access }: NavbarsProps) => {
+  console.log(access);
   return (
     <header className='mt-0 py-4 bg-blue-600 py-4'>
         <nav className='flex justify-between items-center w-[92%]  mx-auto'>
@@ -18,9 +22,9 @@ const Navbars= () =>{
                     <li className='text-white'>
                     <Link to="/home">Оценка компетенций</Link>
                     </li>
-                    <li className='text-white'>
+                   { access ? <li className='text-white'>
                     <Link to="/users">Пользователи</Link>
-                    </li>
+                    </li> : null }
                     <li className='text-white'>
                     <Link to="/profil">Профиль</Link>
                     </li>
@@ -32,4 +36,6 @@ const Navbars= () =>{
   
   );
 }
+
+
 export default Navbars;
