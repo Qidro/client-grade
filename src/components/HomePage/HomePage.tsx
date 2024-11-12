@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Link, useNavigate  } from 'react-router-dom';
 import Navbars from "../NavigationPanel/Navbar";
 import { Console } from "console";
 import Cookies from "js-cookie";
-import { CheckRole, SetSurveysList } from "../../services/node";
+import { ChangeSurvey, CheckRole, DeleteSurvey, DeleteUser, SetSurveysList } from "../../services/node";
 import './loader.css'; // Импортируем стили
 
 export function Home()
@@ -48,6 +48,38 @@ export function Home()
     console.log('маршрут перестраивается');
     navigate("/create");
    }
+
+   //удаление опроса из БД
+  const DeleteSurveys = async(id: number) =>
+    {   
+       
+        // const posts = [
+        //     {login: login, firstName: firstName, lastName: lastName, patronymic:Patronymic, email: email, password:password  }
+        //   ];
+        let posts = 
+            {
+                Id: id
+            }
+        console.log("Все прошло успешно");
+          await DeleteSurvey(posts);
+          window.location.reload();
+    };
+
+   //редактирование опроса
+   const ChangeSurveys = async(id: number) =>
+    {   
+       
+        // const posts = [
+        //     {login: login, firstName: firstName, lastName: lastName, patronymic:Patronymic, email: email, password:password  }
+        //   ];
+        let posts = 
+            {
+                Id: id
+            }
+        console.log("Все прошло успешно");
+          await ChangeSurvey(posts);
+          window.location.reload();
+    };
     // const [styleButton, setStyleButton] = useState('bg-blue-500')
 
     // const [login, setLogin] = useState('')
@@ -161,6 +193,8 @@ export function Home()
                 <div className="ml-2 font-bold">{item.title}</div>
                 <div className="ml-2 font-semibold">{item.description}</div>
                 <div className="flex justify-end"> <button  type="button" className=" bg-blue-500  w-32 h-10 text-white rounded-lg">Пройти опрос</button></div>
+                <button type="button" onClick={(e) => DeleteSurveys(item.id)}><img src="\icon\trash\trash.png" alt="Иконка" width="30" height="30"/></button>
+                <button type="button" onClick={(e) => ChangeSurveys(item.id)}><img src="\icon\pencil\pencil.png" alt="Иконка" width="25" height="25"/></button>
            
             </div>
              ))}

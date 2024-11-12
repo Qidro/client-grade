@@ -254,3 +254,111 @@ export const SetSurveysList = async () => {
     return("Ошибка");
    }
 }
+
+//функция удаления опроса
+export const DeleteSurvey = async (posts: any) => {
+   try{
+      console.log("id пользователя ", posts);
+      const respone = await fetch("http://localhost:5281/DeleteSurvey", {
+      method: "DELETE",
+      headers:{
+         "content-type": "application/json",
+      },
+      body: JSON.stringify(posts),
+   })
+
+   return(respone.ok);
+    }
+   catch(e)
+   {
+    console.error("Бывает:", e);
+    return(false);
+   }
+}
+
+//функция обновления опроса
+// export const ChangeSurvey = async (posts: any) => {
+//    try{
+//       console.log("id пользователя ", posts);
+//       const respone = await fetch("http://localhost:5281/SetSurvey", {
+//       method: "POST",
+//       headers:{
+//          "content-type": "application/json",
+//       },
+//       body: JSON.stringify(posts),
+//    })
+//    const data = await respone.json();
+//    console.log("Наш полученный массив опросов: ", data );
+//     }
+//    catch(e)
+//    {
+//     console.error("Бывает:", e);
+//     return("Ошибка");
+//    }
+// }
+
+//функция обновления опроса
+export const ChangeSurvey = async (posts: any) => {
+   try{
+      console.log("id пользователя ", posts);
+      const respone = await fetch("http://localhost:5281/SetSurvey", {
+      method: "POST",
+      headers:{
+         "content-type": "application/json",
+      },
+      body: JSON.stringify(posts),
+   })
+   const data = await respone.json();
+   console.log("Наш полученный массив опросов: ", data );
+   return(data);
+    }
+   catch(e)
+   {
+    console.error("Бывает:", e);
+    return("Ошибка");
+   }
+}
+
+//функция обновления опроса
+export const ChangeSurveyQuestion = async (posts: any) => {
+   try{
+      console.log("id пользователя ", posts);
+      const respone = await fetch("http://localhost:5281/SetQuestion", {
+      method: "POST",
+      headers:{
+         "content-type": "application/json",
+      },
+      body: JSON.stringify(posts),
+   })
+   const data = await respone.json();
+   console.log("Наш полученный массив опросов: ", data );
+   return (data);
+    }
+   catch(e)
+   {
+    console.error("Бывает:", e);
+    return("Ошибка");
+   }
+}
+
+//функция обновления опроса
+export const ChangeSurveyAnswer = async (posts: any) => {
+   try{
+      console.log("id пользователя ", posts);
+      const respone = await fetch("http://localhost:5281/SetAnswer", {
+      method: "POST",
+      headers:{
+         "content-type": "application/json",
+      },
+      body: JSON.stringify(posts),
+   })
+   const data = await respone.json();
+   console.log("Наш полученный массив опросов: ", data );
+   return (data);
+    }
+   catch(e)
+   {
+    console.error("Бывает:", e);
+    return("Ошибка");
+   }
+}

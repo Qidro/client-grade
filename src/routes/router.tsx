@@ -8,6 +8,7 @@ import UnPrivateRoute from "../components/PRoute/UnprivateRoute";
 import {  CreateTestt } from "../components/CreateTest/CreateTest";
 import { Users } from "../components/Users/Users";
 import PrivateRouteRole from "../components/PRoute/PrivateRouteRole";
+import { EditSurvey } from "../components/EditSurvey/EditSurvey";
 
 
 
@@ -44,6 +45,10 @@ export const router = createBrowserRouter([
     {
         path: "/users",
         element: <PrivateRouteRole><Users /></PrivateRouteRole>
+    },
+    {
+        path: "/editSirve",
+        element: <PrivateRouteRole><EditSurvey /></PrivateRouteRole>
     },
 {
     path: '/*',
