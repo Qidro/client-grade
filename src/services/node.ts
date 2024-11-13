@@ -362,3 +362,26 @@ export const ChangeSurveyAnswer = async (posts: any) => {
     return("Ошибка");
    }
 }
+
+//запрос на изменение опроса
+
+//функция по проверки юзера
+export const Editurveys = async (surveyInformation: any) => {
+   try{
+      console.log("Массив: ", surveyInformation);
+      const respone = await fetch("http://localhost:5281/EditSurvey", {
+      method: "PUT",
+      headers:{
+         "content-type": "application/json",
+      },
+      body: JSON.stringify(surveyInformation),
+   })
+   const data = await respone.text();
+   return(data);
+    }
+   catch(e)
+   {
+    console.error("Бывает:", e);
+    return("Ошибка");
+   }
+}

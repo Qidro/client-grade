@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react"
-import { BrowserRouter, Route, Link, useNavigate  } from 'react-router-dom';
+import { BrowserRouter, Route, Link, useNavigate, useLocation  } from 'react-router-dom';
 import { Reg } from "../Registration/Registration";
-import { ChangeSurvey, ChangeSurveyAnswer, ChangeSurveyQuestion, CheckUser, CreateSurveys } from "../../services/node";
+import { ChangeSurvey, ChangeSurveyAnswer, ChangeSurveyQuestion, CheckUser, CreateSurveys, Editurveys } from "../../services/node";
 import Cookies from 'js-cookie';
 import Navbars from "../NavigationPanel/Navbar";
 
 export function EditSurvey()
 {
+    const location = useLocation();
+    const IdSurvey = location.state?.variable;
+
+
     const [loading, setLoading] = useState(true);
     //перменная для названия опроса и описания
     const [Survey, setSurvey] = useState<{titleSurvey: string; description: string}[]>([]);
@@ -72,6 +76,7 @@ export function EditSurvey()
         //   ];
         let surveyInformation = 
             {   
+                Id: IdSurvey,
                 title: title,
                 description: description,
                 idQ: inputFields.map(field => field.id),
@@ -99,7 +104,7 @@ export function EditSurvey()
         //     points: questions.map(field => field.points)
         // }
 
-          let mess = await CreateSurveys(surveyInformation);
+          let mess = await Editurveys(surveyInformation);
           console.log(mess);
           navigate("/home");
           
@@ -309,7 +314,7 @@ useEffect( () =>{
     setTimeout(() => {
       setLoading(false);
     }, 2000);
-    ChangeSurveys(50);
+    ChangeSurveys(IdSurvey);
     
 }
 , [])
@@ -448,7 +453,7 @@ useEffect( () =>{
       ))}
     </div>
     <div className="mt-4 grid grid-cols-6 gap-2 place-items-end">
-                <button type="button" className="col-start-5 bg-blue-500 h-10 px-20 py-0 text-white rounded-lg" onClick={CreateSurvey}>Сохранить тест</button>
+                <button type="button" className="col-start-5 bg-blue-500 h-10 px-20 py-0 text-white rounded-lg" onClick={CreateSurvey}>Изменить опрос</button>
             </div>
             </div>
 

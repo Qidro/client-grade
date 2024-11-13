@@ -72,13 +72,7 @@ export function Home()
         // const posts = [
         //     {login: login, firstName: firstName, lastName: lastName, patronymic:Patronymic, email: email, password:password  }
         //   ];
-        let posts = 
-            {
-                Id: id
-            }
-        console.log("Все прошло успешно");
-          await ChangeSurvey(posts);
-          window.location.reload();
+        navigate("/editSirve", { state: { variable: id } });
     };
     // const [styleButton, setStyleButton] = useState('bg-blue-500')
 
@@ -177,9 +171,9 @@ export function Home()
             <div className="h-screen flex justify-center items-center">
                 <div className='overflow-x-auto w-5/6 h-5/6 p-0 border-solid border-0
             border-white-100 rounded-lg bg-white 2xl:w-5/6 h-5/6 lg:w-5/6 h-5/6 md:w-5/6 h-5/6 sm:w-full'>
-                    <div className = "pb-4 flex justify-center items-center"><img  src="ugmu-logo.png" alt="неее" width={180} height={180}/></div>
+                    {/* <div className = "pb-4 flex justify-center items-center"><img  src="ugmu-logo.png" alt="неее" width={180} height={180}/></div> */}
                     <div className="text-center">
-                        <h1 className="text-xl">Тип главная страницаа</h1>
+                        <h1 className="text-2xl">Опросы сайта</h1>
                         {/* Поле логина */}
                         {/* {(loginDirty && loginError) && <div style={{color:'red'}}>{loginError}</div>} */}
                         
@@ -187,7 +181,7 @@ export function Home()
                     {/* grid grid-cols-5 gap-4 gap-x-0 place-items-start */}
            <div   className="grid grid-cols-5 gap-4 gap-x-0 place-items-start ">
            {surveys.map(item => (
-                <div key={item.id}  className='ml-8 w-64 h-80 p-0 border-solid border-2
+                <div key={item.id}  className='ml-8 mt-4 w-64 h-80 p-0 border-solid border-2
                      border-slate-950 rounded-lg bg-white '> 
                 <div className="flex justify-center mt-2"><img src="\icon\videoPreview.png" alt="" width="225" height="200" /></div>
                 <div className="ml-2 font-bold">{item.title}</div>
@@ -198,7 +192,7 @@ export function Home()
            
             </div>
              ))}
-              { result ? <button  onClick={CreateTest} type="button"><div className='ml-8 w-64 h-80 p-0 border-dashed border-2
+              { result ? <button  onClick={CreateTest} type="button"><div className='mt-4 ml-8 w-64 h-80 p-0 border-dashed border-2
    border-gray-600 rounded-lg bg-white 2xl:ml-8 lg:ml-40 md:ml-8 sm:ml-8' ><img className="mt-16 opacity-75" src="plus1.png" alt="my image" width={300} height={300} /></div></button>: null }
        </div>
               
