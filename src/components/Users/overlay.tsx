@@ -70,7 +70,21 @@ const Overlay: React.FC<OverlayProps>= ({ isVisible, onClose, Id, Login, FirstNa
           
         };
         UserParse()
+        
     },[isVisible]
+    )
+    useEffect( () =>{
+      if(role == true)
+        {
+          setRole(false);
+          setstringRole("Пользователь");
+        }
+        else{
+          setRole(true);
+          setstringRole("Администратор");
+        }
+        
+    },[Role]
     )
 
     //функция отвечающая за видимость кнопки по состоянию веденных полей 

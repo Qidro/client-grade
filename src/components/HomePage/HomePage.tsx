@@ -20,7 +20,7 @@ export function Home()
         setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 1);
+    }, 1000);
         //проверка пользователя на роль, пределяющая получит ли пользователь создавать тесты
         const CheckUserRole = async() =>
         {
@@ -73,6 +73,16 @@ export function Home()
         //     {login: login, firstName: firstName, lastName: lastName, patronymic:Patronymic, email: email, password:password  }
         //   ];
         navigate("/editSirve", { state: { variable: id } });
+    };
+
+    //редактирование опроса
+   const ComplateSurveys = async(id: number) =>
+    {   
+       
+        // const posts = [
+        //     {login: login, firstName: firstName, lastName: lastName, patronymic:Patronymic, email: email, password:password  }
+        //   ];
+        navigate("/completSurvey", { state: { variable: id } });
     };
     // const [styleButton, setStyleButton] = useState('bg-blue-500')
 
@@ -186,7 +196,7 @@ export function Home()
                 <div className="flex justify-center mt-2"><img src="\icon\videoPreview.png" alt="" width="225" height="200" /></div>
                 <div className="ml-2 font-bold">{item.title}</div>
                 <div className="ml-2 font-semibold">{item.description}</div>
-                <div className="flex justify-end"> <button  type="button" className=" bg-blue-500  w-32 h-10 text-white rounded-lg">Пройти опрос</button></div>
+                <div className="flex justify-end"> <button  type="button" onClick={(e) => ComplateSurveys(item.id)} className=" bg-blue-500  w-32 h-10 text-white rounded-lg">Пройти опрос</button></div>
                 <button type="button" onClick={(e) => DeleteSurveys(item.id)}><img src="\icon\trash\trash.png" alt="Иконка" width="30" height="30"/></button>
                 <button type="button" onClick={(e) => ChangeSurveys(item.id)}><img src="\icon\pencil\pencil.png" alt="Иконка" width="25" height="25"/></button>
            
