@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { Registration } from "../../data/Registration"
 import {User} from "../../types/user";
-import { CreateUser } from "../../services/nodes";
 import { title } from "process";
+import { CreateUser } from "../../services/node";
 interface ProductProps{
     product: Registration
 

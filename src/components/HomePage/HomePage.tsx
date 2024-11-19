@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import { CreateUser } from "../../services/nodes";
 import { BrowserRouter, Route, Link, useNavigate  } from 'react-router-dom';
 import Navbars from "../NavigationPanel/Navbar";
 import { Console } from "console";
